@@ -571,7 +571,7 @@ footer {
       </div>
       <div class="footer-row">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-        <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="80e9eee6efc0edefe2e9ecf0f2e9f3aeeeef">[email&#160;protected]</a>
+        <span>info&#64;mobilpris.no</span>
       </div>
     </div>
     <div>
@@ -600,18 +600,18 @@ footer {
   </div>
 </div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
 // ── FORM ──
 var ans = {};
 
-function clrErr(id) {
+window.clrErr = function(id) {
   var el = document.getElementById(id);
   el.classList.remove('err');
   var e = document.getElementById('e_'+id);
   if (e) e.remove();
 }
 
-function showErr(id, msg) {
+window.showErr = function(id, msg) {
   var el = document.getElementById(id);
   el.classList.add('err');
   var e = document.getElementById('e_'+id);
@@ -619,8 +619,8 @@ function showErr(id, msg) {
   e.textContent = msg;
 }
 
-function validEmail(v) { return /^[^\s@,]+@[^\s@,]+\.[a-zA-Z]{2,}$/.test(v); }
-function validPhone(v) {
+window.validEmail = function(v) { return /^[^\s@,]+@[^\s@,]+\.[a-zA-Z]{2,}$/.test(v); }
+window.validPhone = function(v) {
   // Strip everything except digits
   var d = v.replace(/\D/g, '');
   // If starts with 47 and is 10 digits (47 + 8), strip the 47
@@ -628,7 +628,7 @@ function validPhone(v) {
   return d.length === 8;
 }
 
-function go(step) {
+window.go = function(step) {
   if (step === 1) {
     var name  = document.getElementById('f_name').value.trim();
     var email = document.getElementById('f_email').value.trim();
@@ -649,13 +649,13 @@ function go(step) {
   document.getElementById('pFill').style.width = (step/4*100)+'%';
 }
 
-function pick(el, key, val) {
+window.pick = function(el, key, val) {
   ans[key] = val;
   el.closest('.opts').querySelectorAll('.opt').forEach(function(o){ o.classList.remove('sel'); });
   el.classList.add('sel');
 }
 
-function submit() {
+window.submit = function() {
   var ce = document.getElementById('consentErr');
   ce.textContent = '';
   if (!document.getElementById('f_consent').checked) {
@@ -783,5 +783,20 @@ function submit() {
     last = cur;
   }, {passive:true});
 })();
+// ── PERSONVERN ──
+window.openPV = function()  { document.getElementById('pvOverlay').style.display='block'; window.scrollTo(0,0); }
+window.closePV = function() { document.getElementById('pvOverlay').style.display='none'; }
 
-// ── PER
+// ── NAV HIDE ON SCROLL ──
+(function() {
+  var nav = document.getElementById('nav');
+  var last = window.scrollY;
+  window.addEventListener('scroll', function() {
+    var cur = window.scrollY;
+    nav.classList.toggle('hide', cur > last && cur > 60);
+    last = cur;
+  }, {passive:true});
+})();
+</script>
+</body>
+</html>
