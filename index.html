@@ -409,8 +409,8 @@ footer {
       <div class="step-label">Steg 2 av 4</div>
       <div class="step-q">Betaler du mobilabonnement for deg selv eller andre i familien?</div>
       <div class="opts">
-        <button class="opt" data-pick="q1" data-val="Ja" data-next="2">✓ &nbsp;Ja</button>
-        <button class="opt" data-pick="q1" data-val="Nei" data-next="2">✕ &nbsp;Nei</button>
+        <button class="opt" data-pick="q1" data-val="Ja" data-next="3">✓ &nbsp;Ja</button>
+        <button class="opt" data-pick="q1" data-val="Nei" data-next="3">✕ &nbsp;Nei</button>
       </div>
     </div>
 
@@ -419,11 +419,11 @@ footer {
       <div class="step-label">Steg 3 av 4</div>
       <div class="step-q">Hvor gammel er du?</div>
       <div class="opts g2">
-        <button class="opt" data-pick="q2" data-val="45+" data-next="3">45+</button>
-        <button class="opt" data-pick="q2" data-val="31-45" data-next="3">31 – 45</button>
-        <button class="opt" data-pick="q2" data-val="25-30" data-next="3">25 – 30</button>
-        <button class="opt" data-pick="q2" data-val="18-24" data-next="3">18 – 24</button>
-        <button class="opt full" data-pick="q2" data-val="Under 18" data-next="3">Under 18</button>
+        <button class="opt" data-pick="q2" data-val="45+" data-next="4">45+</button>
+        <button class="opt" data-pick="q2" data-val="31-45" data-next="4">31 – 45</button>
+        <button class="opt" data-pick="q2" data-val="25-30" data-next="4">25 – 30</button>
+        <button class="opt" data-pick="q2" data-val="18-24" data-next="4">18 – 24</button>
+        <button class="opt full" data-pick="q2" data-val="Under 18" data-next="4">Under 18</button>
       </div>
     </div>
 
@@ -432,15 +432,15 @@ footer {
       <div class="step-label">Steg 4 av 4</div>
       <div class="step-q">Hva er din nåværende mobiloperatør?</div>
       <div class="opts g2">
-        <button class="opt" data-pick="q3" data-val="Bedriftsabonnement" data-next="4">Jeg har bedriftsabonnement</button>
-        <button class="opt" data-pick="q3" data-val="Fjordkraft" data-next="4">Fjordkraft</button>
-        <button class="opt" data-pick="q3" data-val="ICE" data-next="4">ICE</button>
-        <button class="opt" data-pick="q3" data-val="MyCall" data-next="4">MyCall</button>
-        <button class="opt" data-pick="q3" data-val="OneCall" data-next="4">OneCall</button>
-        <button class="opt" data-pick="q3" data-val="Telia" data-next="4">Telia</button>
-        <button class="opt" data-pick="q3" data-val="Telenor" data-next="4">Telenor</button>
-        <button class="opt" data-pick="q3" data-val="Talkmore" data-next="4">Talkmore</button>
-        <button class="opt full" data-pick="q3" data-val="Annet" data-next="4">Annet</button>
+        <button class="opt" data-pick="q3" data-val="Bedriftsabonnement">Jeg har bedriftsabonnement</button>
+        <button class="opt" data-pick="q3" data-val="Fjordkraft">Fjordkraft</button>
+        <button class="opt" data-pick="q3" data-val="ICE">ICE</button>
+        <button class="opt" data-pick="q3" data-val="MyCall">MyCall</button>
+        <button class="opt" data-pick="q3" data-val="OneCall">OneCall</button>
+        <button class="opt" data-pick="q3" data-val="Telia">Telia</button>
+        <button class="opt" data-pick="q3" data-val="Telenor">Telenor</button>
+        <button class="opt" data-pick="q3" data-val="Talkmore">Talkmore</button>
+        <button class="opt full" data-pick="q3" data-val="Annet">Annet</button>
       </div>
       <label class="consent">
         <input type="checkbox" id="f_consent" />
@@ -654,11 +654,14 @@ document.addEventListener('DOMContentLoaded', function() {
   // Option buttons
   document.querySelectorAll('.opt[data-pick]').forEach(function(btn){
     btn.addEventListener('click',function(){
-      var key=this.dataset.pick, val=this.dataset.val, next=parseInt(this.dataset.next);
+      var key=this.dataset.pick, val=this.dataset.val, next=this.dataset.next;
       ans[key]=val;
       this.closest('.opts').querySelectorAll('.opt').forEach(function(o){o.classList.remove('sel');});
       this.classList.add('sel');
-      goTo(next-1,next);
+      if(next){
+        var n=parseInt(next);
+        goTo(n-1,n);
+      }
     });
   });
 
