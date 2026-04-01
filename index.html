@@ -396,7 +396,7 @@ footer {
       </div>
       <div class="field">
         <label>Telefonnummer <em>*</em></label>
-        <input type="tel" id="f_phone" placeholder="91234567" oninput="clrErr('f_phone')" />
+        <input type="tel" id="f_phone" placeholder="+47 91234567" oninput="lockPrefix(this);clrErr('f_phone')" onfocus="lockPrefix(this)" />
       </div>
       <button class="btn-accent" onclick="go(1)">
         Neste
@@ -620,6 +620,11 @@ function showErr(id, msg) {
 }
 
 function validEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v); }
+function lockPrefix(el) {
+  if (!el.value.startsWith('+47 ')) {
+    el.value = '+47 ' + el.value.replace(/^\+47\s?/,'');
+  }
+}
 function validPhone(v) { var d=v.replace(/[\s\-]/g,'').replace(/^\+47/,'').replace(/^0047/,''); return /^\d{8}$/.test(d); }
 
 function go(step) {
