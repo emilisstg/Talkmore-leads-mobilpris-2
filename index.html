@@ -396,7 +396,7 @@ footer {
       </div>
       <div class="field">
         <label>Telefonnummer <em>*</em></label>
-        <input type="tel" id="f_phone" placeholder="91234567" oninput="clrErr('f_phone')" />
+        <input type="tel" id="f_phone" placeholder="91234567" oninput="clrErr('f_phone')" onfocus="addPrefix(this)" onclick="addPrefix(this)" />
       </div>
       <button class="btn-accent" onclick="go(1)">
         Neste
@@ -620,10 +620,14 @@ window.showErr = function(id, msg) {
 }
 
 window.validEmail = function(v) { return /^[^\s@,]+@[^\s@,]+\.[a-zA-Z]{2,}$/.test(v); }
+window.addPrefix = function(el) {
+  if (!el.value.startsWith('+47 ')) {
+    el.value = '+47 ';
+  }
+}
+
 window.validPhone = function(v) {
-  // Strip everything except digits
   var d = v.replace(/\D/g, '');
-  // If starts with 47 and is 10 digits (47 + 8), strip the 47
   if (d.length === 10 && d.startsWith('47')) d = d.slice(2);
   return d.length === 8;
 }
@@ -643,7 +647,7 @@ window.go = function(step) {
     else clrErr('f_phone');
     if (!ok) return;
   }
-  if (step === 4) { submit(); return; }
+  if (step === 4) { sendForm(); return; }
   document.getElementById('s'+step).classList.remove('on');
   document.getElementById('s'+(step+1)).classList.add('on');
   document.getElementById('pFill').style.width = (step/4*100)+'%';
