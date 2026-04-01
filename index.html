@@ -447,7 +447,7 @@ footer {
         <span>Ja, jeg er over 18 år og Mobilpris kan kontakte meg på telefon med et godt tilbud, selv om jeg har reservert meg mot dette i reservasjonsregisteret.</span>
       </label>
       <div id="consentErr"></div>
-      <button class="btn-accent" onclick="submit()">
+      <button class="btn-accent" onclick="sendForm()">
         Send søknad
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
       </button>
@@ -655,7 +655,7 @@ window.pick = function(el, key, val) {
   el.classList.add('sel');
 }
 
-window.submit = function() {
+window.sendForm = function() {
   var ce = document.getElementById('consentErr');
   ce.textContent = '';
   if (!document.getElementById('f_consent').checked) {
