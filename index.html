@@ -620,7 +620,7 @@ function showErr(id, msg) {
 }
 
 function validEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v); }
-function validPhone(v) { var d=v.replace(/[\s\-\+]/g,'').replace(/^(0047|47)/,''); return /^\d{8}$/.test(d); }
+function validPhone(v) { var d=v.replace(/[\s\-]/g,'').replace(/^\+47/,'').replace(/^0047/,''); return /^\d{8}$/.test(d); }
 
 function go(step) {
   if (step === 1) {
