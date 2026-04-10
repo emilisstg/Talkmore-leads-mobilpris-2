@@ -584,7 +584,6 @@ footer {
     <div>
       <div class="footer-nav-title">Navigasjon</div>
       <ul class="footer-nav">
-        <li><a href="#om-oss">Om oss</a></li>
         <li><a href="#" id="pvLink">Personvern- og brukervilkår</a></li>
       </ul>
     </div>
@@ -806,11 +805,33 @@ document.addEventListener('DOMContentLoaded', function() {
   var pvLink=document.getElementById('pvLink');
   var pvBack=document.getElementById('pvBack');
   var cookiePvLink=document.getElementById('cookiePvLink');
-  function openPV(e){ if(e) e.preventDefault(); document.getElementById('pvOverlay').style.display='block'; window.scrollTo(0,0); }
-  function closePV(){ document.getElementById('pvOverlay').style.display='none'; }
+
+  function openPV(e){ 
+    if(e) e.preventDefault(); 
+    document.getElementById('pvOverlay').style.display='block'; 
+    window.scrollTo(0,0);
+    history.pushState(null, '', '#personvern');
+  }
+  function closePV(){ 
+    document.getElementById('pvOverlay').style.display='none'; 
+    history.pushState(null, '', window.location.pathname);
+  }
   if(pvLink) pvLink.addEventListener('click', openPV);
   if(pvBack) pvBack.addEventListener('click', closePV);
   if(cookiePvLink) cookiePvLink.addEventListener('click', openPV);
+
+  // Open personvern if URL hash is #personvern on page load
+  if(window.location.hash === '#personvern') {
+    document.getElementById('pvOverlay').style.display='block';
+    window.scrollTo(0,0);
+  }
+
+  // Handle browser back button closing overlay
+  window.addEventListener('popstate', function(){
+    if(window.location.hash !== '#personvern'){
+      document.getElementById('pvOverlay').style.display='none';
+    }
+  });
 
   // Cookie banner
   var cookieBanner = document.getElementById('cookieBanner');
