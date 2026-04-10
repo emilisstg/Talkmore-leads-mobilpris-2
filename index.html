@@ -428,7 +428,7 @@ footer {
         <button class="opt" data-pick="q2" data-val="31-45" data-next="4">31 – 45</button>
         <button class="opt" data-pick="q2" data-val="25-30" data-next="4">25 – 30</button>
         <button class="opt" data-pick="q2" data-val="18-24" data-next="4">18 – 24</button>
-        <button class="opt full" data-pick="q2" data-val="Under 18" data-next="4">Under 18</button>
+        <button class="opt full" data-pick="q2" data-val="Under 18" data-reject="1">Under 18</button>
       </div>
     </div>
 
@@ -468,6 +468,15 @@ footer {
     <p>Vi er allerede i gang med å jakte de beste mobilavtalene for deg.</p>
     <p>En av våre rådgivere vil ringe deg snart med et godt tilbud.</p>
     <p class="small">🔒 Dine data behandles trygt og i samsvar med GDPR.</p>
+  </div>
+
+  <!-- UNDER 18 REJECTION -->
+  <div class="ty" id="rejectUnder18">
+    <div class="emoji">🚫</div>
+    <h2>Beklager!</h2>
+    <p>Du må være 18 år eller eldre for å bruke våre tjenester.</p>
+    <p>Takk for din interesse – vi håper å se deg tilbake når du fyller 18.</p>
+    <p class="small">🔒 Ingen opplysninger er lagret.</p>
   </div>
 </section>
 
@@ -609,7 +618,7 @@ footer {
       <p><strong>Meisel AS</strong><br>
       Org.nr.: 925 908 445<br>
       Innspurten 1B, 0663 Oslo<br>
-      E-post: vian@meisel.no</p>
+      E-post: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="05736c646b4568606c7660692b6b6a">[email&#160;protected]</a></p>
       <p>Mobilpris er et varenavn eid og drevet av Meisel AS.</p>
     </div>
 
@@ -657,12 +666,12 @@ footer {
         <li><strong>Begrensning:</strong> Du kan be om at behandlingen av opplysningene dine begrenses.</li>
         <li><strong>Innsigelse:</strong> Du kan protestere mot behandling basert på berettiget interesse.</li>
       </ul>
-      <p>For å utøve dine rettigheter, kontakt oss på vian@meisel.no.</p>
+      <p>For å utøve dine rettigheter, kontakt oss på <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="55233c343b1538303c2630397b3b3a">[email&#160;protected]</a>.</p>
     </div>
 
     <div class="pv-section">
       <h2>7. Trekke tilbake samtykke</h2>
-      <p>Du kan når som helst trekke tilbake samtykket ditt ved å sende en e-post til vian@meisel.no. Tilbaketrekning av samtykket påvirker ikke lovligheten av behandling som fant sted før tilbaketrekningen.</p>
+      <p>Du kan når som helst trekke tilbake samtykket ditt ved å sende en e-post til <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="205649414e604d454953454c0e4e4f">[email&#160;protected]</a>. Tilbaketrekning av samtykket påvirker ikke lovligheten av behandling som fant sted før tilbaketrekningen.</p>
     </div>
 
     <div class="pv-section">
@@ -670,7 +679,7 @@ footer {
       <p>Dersom du mener vi behandler personopplysningene dine i strid med personvernregelverket, har du rett til å klage til Datatilsynet:</p>
       <p><strong>Datatilsynet</strong><br>
       Postboks 458 Sentrum, 0105 Oslo<br>
-      E-post: postkasse@datatilsynet.no<br>
+      E-post: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="44342b37302f253737210420253025302d28373d2a21306a2a2b">[email&#160;protected]</a><br>
       Nettside: datatilsynet.no</p>
     </div>
 
@@ -687,7 +696,7 @@ footer {
     <div class="pv-section">
       <h2>Kontakt oss</h2>
       <p>Har du spørsmål om personvern eller dine rettigheter? Kontakt oss på:<br>
-      <strong>vian@meisel.no</strong></p>
+      <strong><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="24524d454a6449414d5741480a4a4b">[email&#160;protected]</a></strong></p>
     </div>
   </div>
 </div>
@@ -703,7 +712,7 @@ footer {
   </div>
 </div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 document.addEventListener('DOMContentLoaded', function() {
   var ans = {};
 
@@ -757,10 +766,16 @@ document.addEventListener('DOMContentLoaded', function() {
   // Option buttons
   document.querySelectorAll('.opt[data-pick]').forEach(function(btn){
     btn.addEventListener('click',function(){
-      var key=this.dataset.pick, val=this.dataset.val, next=this.dataset.next;
+      var key=this.dataset.pick, val=this.dataset.val, next=this.dataset.next, reject=this.dataset.reject;
       ans[key]=val;
       this.closest('.opts').querySelectorAll('.opt').forEach(function(o){o.classList.remove('sel');});
       this.classList.add('sel');
+      if(reject){
+        document.getElementById('formCard').style.display='none';
+        document.getElementById('rejectUnder18').style.display='block';
+        window.scrollTo({top:0,behavior:'smooth'});
+        return;
+      }
       if(next){
         var n=parseInt(next);
         goTo(n-1,n);
@@ -879,19 +894,4 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     var timer=setInterval(function(){jumpTo(cur+1);},3200);
     track.parentElement.addEventListener('mouseenter',function(){clearInterval(timer);});
-    track.parentElement.addEventListener('mouseleave',function(){clearInterval(timer);timer=setInterval(function(){jumpTo(cur+1);},3200);});
-    var sx=0;
-    track.addEventListener('touchstart',function(e){sx=e.touches[0].clientX;},{passive:true});
-    track.addEventListener('touchend',function(e){var dx=e.changedTouches[0].clientX-sx;if(Math.abs(dx)>36)jumpTo(cur+(dx<0?1:-1));});
-    window.addEventListener('resize',function(){jumpTo(cur,false);});
-    jumpTo(cur,false);
-  }
-
-  // Nav hide on scroll
-  var nav=document.getElementById('nav'), lastY=window.scrollY;
-  window.addEventListener('scroll',function(){var c=window.scrollY;nav.classList.toggle('hide',c>lastY&&c>60);lastY=c;},{passive:true});
-
-});
-</script>
-</body>
-</html>
+    track.parentElement.addEventLi
