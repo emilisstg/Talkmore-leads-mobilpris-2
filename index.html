@@ -329,7 +329,12 @@ footer {
   border-radius: 999px; padding: 7px 18px;
   font-size: 0.86rem; font-weight: 600; margin-bottom: 28px;
 }
-.pv-inner p { color: var(--muted); font-size: 0.97rem; line-height: 1.7; }
+.pv-inner p { color: var(--muted); font-size: 0.95rem; line-height: 1.7; margin-bottom: 12px; }
+.pv-section { margin-bottom: 36px; }
+.pv-section h2 { font-size: 1.15rem; font-weight: 700; color: var(--text); margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1.5px solid #d8eef8; }
+.pv-section ul { padding-left: 20px; margin: 10px 0; }
+.pv-section ul li { color: var(--muted); font-size: 0.95rem; line-height: 1.7; margin-bottom: 4px; }
+.pv-section strong { color: var(--text); }
 
 /* ── MOBILE ── */
 @media (max-width: 860px) {
@@ -442,15 +447,17 @@ footer {
         <button class="opt" data-pick="q3" data-val="Talkmore">Talkmore</button>
         <button class="opt full" data-pick="q3" data-val="Annet">Annet</button>
       </div>
+      <p style="font-size:0.78rem;color:rgba(255,255,255,0.55);margin-bottom:14px;line-height:1.5;">Ved å sende inn dette skjemaet vil du bli kontaktet av Meisel AS på vegne av Talkmore. Det er én felles henvendelse – ikke separate oppringninger fra begge parter.</p>
       <label class="consent">
         <input type="checkbox" id="f_consent" />
-        <span>Ja, jeg er over 18 år og Mobilpris kan kontakte meg på telefon med et godt tilbud, selv om jeg har reservert meg mot dette i reservasjonsregisteret.</span>
+        <span>Ja, jeg er over 18 år og ønsker å bli kontaktet per telefon av Meisel AS og Talkmore med tilbud på mobilabonnement.</span>
       </label>
       <div id="consentErr"></div>
       <button class="btn-accent" id="btnSend">
         Send søknad
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
       </button>
+    <p style="font-size:0.72rem;color:rgba(255,255,255,0.4);margin-top:12px;text-align:center;">Mobilpris er en tjeneste levert av Meisel AS (org.nr. 925 908 445)</p>
     </div>
   </div>
 
@@ -594,9 +601,106 @@ footer {
       <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
       Tilbake
     </button>
-    <h1>Personvern- og brukervilkår</h1>
-    <div class="pv-badge">🚧 Under construction</div>
-    <p>Vi jobber med å ferdigstille denne siden. Kom tilbake snart!</p>
+    <h1>Personvernerklæring</h1>
+    <p style="color:#666;font-size:0.88rem;margin-bottom:32px;">Sist oppdatert: april 2026</p>
+
+    <div class="pv-section">
+      <h2>1. Behandlingsansvarlig</h2>
+      <p>Meisel AS er behandlingsansvarlig for personopplysningene som samles inn via mobilpris.no.</p>
+      <p><strong>Meisel AS</strong><br>
+      Org.nr.: 925 908 445<br>
+      Innspurten 1B, 0663 Oslo<br>
+      E-post: vian@meisel.no</p>
+      <p>Mobilpris er et varenavn eid og drevet av Meisel AS.</p>
+    </div>
+
+    <div class="pv-section">
+      <h2>2. Hvilke opplysninger samler vi inn?</h2>
+      <p>Via skjemaet på mobilpris.no samler vi inn følgende personopplysninger:</p>
+      <ul>
+        <li>Fullt navn</li>
+        <li>E-postadresse</li>
+        <li>Telefonnummer</li>
+        <li>Informasjon om nåværende mobilabonnement og bruksmønster</li>
+        <li>Tidspunkt for innsending</li>
+      </ul>
+    </div>
+
+    <div class="pv-section">
+      <h2>3. Formål og rettslig grunnlag</h2>
+      <p>Vi behandler personopplysningene dine for å kontakte deg med tilbud på mobilabonnement fra Talkmore og/eller andre mobiloperatører vi samarbeider med.</p>
+      <p>Det rettslige grunnlaget for behandlingen er ditt samtykke, jf. personvernforordningen (GDPR) artikkel 6 nr. 1 bokstav a. Du kan når som helst trekke tilbake samtykket ditt (se punkt 7).</p>
+    </div>
+
+    <div class="pv-section">
+      <h2>4. Hvem deler vi opplysningene med?</h2>
+      <p>Personopplysningene dine kan deles med følgende parter:</p>
+      <ul>
+        <li><strong>Talkmore AS</strong> – for oppfølging med tilbud på mobilabonnement</li>
+        <li><strong>Airtable Inc.</strong> – brukes som databehandler for lagring av innsamlede opplysninger. Det er inngått databehandleravtale.</li>
+      </ul>
+      <p>Vi selger ikke personopplysningene dine til tredjeparter.</p>
+    </div>
+
+    <div class="pv-section">
+      <h2>5. Lagringstid</h2>
+      <p>Vi lagrer personopplysningene dine i inntil 12 måneder etter innsamlingstidspunktet, eller til du trekker tilbake samtykket ditt – avhengig av hva som inntreffer først. Etter dette slettes opplysningene.</p>
+    </div>
+
+    <div class="pv-section">
+      <h2>6. Dine rettigheter</h2>
+      <p>I henhold til GDPR har du følgende rettigheter:</p>
+      <ul>
+        <li><strong>Innsyn:</strong> Du kan be om en kopi av personopplysningene vi har om deg.</li>
+        <li><strong>Retting:</strong> Du kan be om at uriktige opplysninger rettes.</li>
+        <li><strong>Sletting:</strong> Du kan be om at opplysningene dine slettes («retten til å bli glemt»).</li>
+        <li><strong>Dataportabilitet:</strong> Du kan be om å få utlevert opplysningene dine i et maskinlesbart format.</li>
+        <li><strong>Begrensning:</strong> Du kan be om at behandlingen av opplysningene dine begrenses.</li>
+        <li><strong>Innsigelse:</strong> Du kan protestere mot behandling basert på berettiget interesse.</li>
+      </ul>
+      <p>For å utøve dine rettigheter, kontakt oss på vian@meisel.no.</p>
+    </div>
+
+    <div class="pv-section">
+      <h2>7. Trekke tilbake samtykke</h2>
+      <p>Du kan når som helst trekke tilbake samtykket ditt ved å sende en e-post til vian@meisel.no. Tilbaketrekning av samtykket påvirker ikke lovligheten av behandling som fant sted før tilbaketrekningen.</p>
+    </div>
+
+    <div class="pv-section">
+      <h2>8. Klagerett</h2>
+      <p>Dersom du mener vi behandler personopplysningene dine i strid med personvernregelverket, har du rett til å klage til Datatilsynet:</p>
+      <p><strong>Datatilsynet</strong><br>
+      Postboks 458 Sentrum, 0105 Oslo<br>
+      E-post: postkasse@datatilsynet.no<br>
+      Nettside: datatilsynet.no</p>
+    </div>
+
+    <div class="pv-section">
+      <h2>9. Informasjonskapsler (cookies)</h2>
+      <p>Mobilpris.no bruker kun funksjonelle informasjonskapsler som er nødvendige for at nettsiden skal fungere. Vi bruker ikke analyse- eller markedsføringscookies uten ditt samtykke. Du vil bli spurt om samtykke ved ditt første besøk.</p>
+    </div>
+
+    <div class="pv-section">
+      <h2>10. Endringer i personvernerklæringen</h2>
+      <p>Dersom vi gjør vesentlige endringer i denne personvernerklæringen, vil vi informere deg via e-post eller ved tydelig varsling på nettsiden. Vi anbefaler at du jevnlig leser gjennom denne erklæringen.</p>
+    </div>
+
+    <div class="pv-section">
+      <h2>Kontakt oss</h2>
+      <p>Har du spørsmål om personvern eller dine rettigheter? Kontakt oss på:<br>
+      <strong>vian@meisel.no</strong></p>
+    </div>
+  </div>
+</div>
+
+<!-- COOKIE BANNER -->
+<div id="cookieBanner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:1000;background:#0d2d4a;border-top:2px solid rgba(143,227,255,0.2);padding:18px 32px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;">
+  <p style="color:rgba(255,255,255,0.8);font-size:0.85rem;margin:0;max-width:680px;line-height:1.5;">
+    Vi bruker kun nødvendige informasjonskapsler for at nettsiden skal fungere. Les mer i vår <a href="#" id="cookiePvLink" style="color:#8fe3ff;text-decoration:underline;">personvernerklæring</a>.
+  </p>
+  <div style="display:flex;gap:10px;flex-shrink:0;">
+    <button id="cookieDeny" style="background:transparent;border:1.5px solid rgba(255,255,255,0.3);color:rgba(255,255,255,0.7);border-radius:999px;padding:8px 20px;font-family:inherit;font-size:0.85rem;cursor:pointer;">Avslå</button>
+    <button id="cookieAccept" style="background:#8fe3ff;border:none;color:#0d2d4a;border-radius:999px;padding:8px 20px;font-family:inherit;font-size:0.85rem;font-weight:700;cursor:pointer;">Godta</button>
   </div>
 </div>
 
@@ -701,8 +805,28 @@ document.addEventListener('DOMContentLoaded', function() {
   // Personvern
   var pvLink=document.getElementById('pvLink');
   var pvBack=document.getElementById('pvBack');
-  if(pvLink) pvLink.addEventListener('click',function(e){e.preventDefault();document.getElementById('pvOverlay').style.display='block';window.scrollTo(0,0);});
-  if(pvBack) pvBack.addEventListener('click',function(){document.getElementById('pvOverlay').style.display='none';});
+  var cookiePvLink=document.getElementById('cookiePvLink');
+  function openPV(e){ if(e) e.preventDefault(); document.getElementById('pvOverlay').style.display='block'; window.scrollTo(0,0); }
+  function closePV(){ document.getElementById('pvOverlay').style.display='none'; }
+  if(pvLink) pvLink.addEventListener('click', openPV);
+  if(pvBack) pvBack.addEventListener('click', closePV);
+  if(cookiePvLink) cookiePvLink.addEventListener('click', openPV);
+
+  // Cookie banner
+  var cookieBanner = document.getElementById('cookieBanner');
+  var cookieAccept = document.getElementById('cookieAccept');
+  var cookieDeny   = document.getElementById('cookieDeny');
+  if(!localStorage.getItem('cookieChoice')) {
+    cookieBanner.style.display = 'flex';
+  }
+  if(cookieAccept) cookieAccept.addEventListener('click', function(){
+    localStorage.setItem('cookieChoice','accepted');
+    cookieBanner.style.display='none';
+  });
+  if(cookieDeny) cookieDeny.addEventListener('click', function(){
+    localStorage.setItem('cookieChoice','denied');
+    cookieBanner.style.display='none';
+  });
 
   // Carousel
   var track=document.getElementById('cTrack');
