@@ -428,7 +428,7 @@ footer {
         <button class="opt" data-pick="q2" data-val="31-45" data-next="4">31 – 45</button>
         <button class="opt" data-pick="q2" data-val="25-30" data-next="4">25 – 30</button>
         <button class="opt" data-pick="q2" data-val="18-24" data-next="4">18 – 24</button>
-        <button class="opt full" data-pick="q2" data-val="Under 18" data-next="4">Under 18</button>
+        <button class="opt full" data-pick="q2" data-val="Under 18" data-next="u18">Under 18</button>
       </div>
     </div>
 
@@ -468,6 +468,15 @@ footer {
     <p>Vi er allerede i gang med å jakte de beste mobilavtalene for deg.</p>
     <p>En av våre rådgivere vil ringe deg snart med et godt tilbud.</p>
     <p class="small">🔒 Dine data behandles trygt og i samsvar med GDPR.</p>
+  </div>
+
+  <!-- UNDER 18 -->
+  <div class="ty" id="u18screen">
+    <div class="emoji">🙏</div>
+    <h2>Beklager!</h2>
+    <p>Denne tjenesten er dessverre kun for personer over 18 år, og du kan ikke inngå avtaler på egne vegne ennå.</p>
+    <p>Men ikke gi opp – be en forelder eller foresatt om å fylle ut skjemaet for deg, så hjelper vi gjerne med å finne et godt mobilabonnement!</p>
+    <p class="small">👨‍👩‍👧 Be en forelder klikke på siden og fylle ut skjemaet.</p>
   </div>
 </section>
 
@@ -670,7 +679,7 @@ footer {
       <p>Dersom du mener vi behandler personopplysningene dine i strid med personvernregelverket, har du rett til å klage til Datatilsynet:</p>
       <p><strong>Datatilsynet</strong><br>
       Postboks 458 Sentrum, 0105 Oslo<br>
-      E-post: postkasse@datatilsynet.no<br>
+      E-post: vian@meisel.no<br>
       Nettside: datatilsynet.no</p>
     </div>
 
@@ -761,7 +770,11 @@ document.addEventListener('DOMContentLoaded', function() {
       ans[key]=val;
       this.closest('.opts').querySelectorAll('.opt').forEach(function(o){o.classList.remove('sel');});
       this.classList.add('sel');
-      if(next){
+      if(next === 'u18'){
+        document.getElementById('formCard').style.display='none';
+        document.getElementById('u18screen').style.display='block';
+        window.scrollTo({top:0,behavior:'smooth'});
+      } else if(next){
         var n=parseInt(next);
         goTo(n-1,n);
       }
@@ -879,19 +892,4 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     var timer=setInterval(function(){jumpTo(cur+1);},3200);
     track.parentElement.addEventListener('mouseenter',function(){clearInterval(timer);});
-    track.parentElement.addEventListener('mouseleave',function(){clearInterval(timer);timer=setInterval(function(){jumpTo(cur+1);},3200);});
-    var sx=0;
-    track.addEventListener('touchstart',function(e){sx=e.touches[0].clientX;},{passive:true});
-    track.addEventListener('touchend',function(e){var dx=e.changedTouches[0].clientX-sx;if(Math.abs(dx)>36)jumpTo(cur+(dx<0?1:-1));});
-    window.addEventListener('resize',function(){jumpTo(cur,false);});
-    jumpTo(cur,false);
-  }
-
-  // Nav hide on scroll
-  var nav=document.getElementById('nav'), lastY=window.scrollY;
-  window.addEventListener('scroll',function(){var c=window.scrollY;nav.classList.toggle('hide',c>lastY&&c>60);lastY=c;},{passive:true});
-
-});
-</script>
-</body>
-</html>
+    track.parentElement.addEventLi
