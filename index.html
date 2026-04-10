@@ -183,18 +183,18 @@ nav.hide { transform: translateY(-100%); }
 }
 .btn-blue:hover { background: var(--blue2); transform: translateY(-1px); }
 
-/* ── THANK YOU ── */
-.ty {
+/* ── THANK YOU & REJECT ── */
+.ty, .reject {
   display: none; text-align: center;
   background: rgba(255,255,255,0.07);
   border: 1.5px solid rgba(143,227,255,0.2);
   border-radius: 16px; padding: 40px 30px;
   width: 100%; max-width: 480px;
 }
-.ty .emoji { font-size: 3rem; margin-bottom: 14px; }
-.ty h2 { font-size: 1.5rem; font-weight: 800; color: #fff; margin-bottom: 10px; }
-.ty p { color: rgba(255,255,255,0.75); line-height: 1.7; margin-bottom: 8px; font-size: 0.95rem; }
-.ty .small { font-size: 0.82rem; color: rgba(255,255,255,0.45); margin-top: 16px; }
+.ty .emoji, .reject .emoji { font-size: 3rem; margin-bottom: 14px; }
+.ty h2, .reject h2 { font-size: 1.5rem; font-weight: 800; color: #fff; margin-bottom: 10px; }
+.ty p, .reject p { color: rgba(255,255,255,0.75); line-height: 1.7; margin-bottom: 8px; font-size: 0.95rem; }
+.ty .small, .reject .small { font-size: 0.82rem; color: rgba(255,255,255,0.45); margin-top: 16px; }
 
 /* ── SECTIONS ── */
 .sec { padding: 80px 64px; }
@@ -389,63 +389,63 @@ footer {
     <div class="progress-bar"><div class="progress-fill" id="pFill"></div></div>
 
     <!-- Step 1 -->
-    <div class="step on" id="s1">
+    <div class="step on" id="s1" data-step="1">
       <div class="step-label">Steg 1 av 4 — Kontaktinfo</div>
       <div class="field">
         <label>Fullt navn <em>*</em></label>
-        <input type="text" id="f_name" placeholder="Ditt for- og etternavn" id="f_name" />
+        <input type="text" id="f_name" placeholder="Ditt for- og etternavn" />
       </div>
       <div class="field">
         <label>E-postadresse <em>*</em></label>
-        <input type="email" id="f_email" placeholder="Din e-postadresse"  />
+        <input type="email" id="f_email" placeholder="Din e-postadresse" />
       </div>
       <div class="field">
         <label>Telefonnummer <em>*</em></label>
-        <input type="tel" id="f_phone" placeholder="91234567"  />
+        <input type="tel" id="f_phone" placeholder="91234567" />
       </div>
-      <button class="btn-accent" id="btnNext1">
+      <button type="button" class="btn-accent" id="btnNext1">
         Neste
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
       </button>
     </div>
 
     <!-- Step 2 -->
-    <div class="step" id="s2">
+    <div class="step" id="s2" data-step="2">
       <div class="step-label">Steg 2 av 4</div>
       <div class="step-q">Betaler du mobilabonnement for deg selv eller andre i familien?</div>
       <div class="opts">
-        <button class="opt" data-pick="q1" data-val="Ja" data-next="3">✓ &nbsp;Ja</button>
-        <button class="opt" data-pick="q1" data-val="Nei" data-next="3">✕ &nbsp;Nei</button>
+        <button type="button" class="opt" data-pick="q1" data-val="Ja" data-next="3">✓ &nbsp;Ja</button>
+        <button type="button" class="opt" data-pick="q1" data-val="Nei" data-next="3">✕ &nbsp;Nei</button>
       </div>
     </div>
 
     <!-- Step 3 -->
-    <div class="step" id="s3">
+    <div class="step" id="s3" data-step="3">
       <div class="step-label">Steg 3 av 4</div>
       <div class="step-q">Hvor gammel er du?</div>
       <div class="opts g2">
-        <button class="opt" data-pick="q2" data-val="45+" data-next="4">45+</button>
-        <button class="opt" data-pick="q2" data-val="31-45" data-next="4">31 – 45</button>
-        <button class="opt" data-pick="q2" data-val="25-30" data-next="4">25 – 30</button>
-        <button class="opt" data-pick="q2" data-val="18-24" data-next="4">18 – 24</button>
-        <button class="opt full" data-pick="q2" data-val="Under 18" data-reject="1">Under 18</button>
+        <button type="button" class="opt" data-pick="q2" data-val="45+" data-next="4">45+</button>
+        <button type="button" class="opt" data-pick="q2" data-val="31-45" data-next="4">31 – 45</button>
+        <button type="button" class="opt" data-pick="q2" data-val="25-30" data-next="4">25 – 30</button>
+        <button type="button" class="opt" data-pick="q2" data-val="18-24" data-next="4">18 – 24</button>
+        <button type="button" class="opt full" data-pick="q2" data-val="Under 18" data-action="reject">Under 18</button>
       </div>
     </div>
 
     <!-- Step 4 -->
-    <div class="step" id="s4">
+    <div class="step" id="s4" data-step="4">
       <div class="step-label">Steg 4 av 4</div>
       <div class="step-q">Hva er din nåværende mobiloperatør?</div>
       <div class="opts g2">
-        <button class="opt" data-pick="q3" data-val="Bedriftsabonnement">Jeg har bedriftsabonnement</button>
-        <button class="opt" data-pick="q3" data-val="Fjordkraft">Fjordkraft</button>
-        <button class="opt" data-pick="q3" data-val="ICE">ICE</button>
-        <button class="opt" data-pick="q3" data-val="MyCall">MyCall</button>
-        <button class="opt" data-pick="q3" data-val="OneCall">OneCall</button>
-        <button class="opt" data-pick="q3" data-val="Telia">Telia</button>
-        <button class="opt" data-pick="q3" data-val="Telenor">Telenor</button>
-        <button class="opt" data-pick="q3" data-val="Talkmore">Talkmore</button>
-        <button class="opt full" data-pick="q3" data-val="Annet">Annet</button>
+        <button type="button" class="opt" data-pick="q3" data-val="Bedriftsabonnement">Jeg har bedriftsabonnement</button>
+        <button type="button" class="opt" data-pick="q3" data-val="Fjordkraft">Fjordkraft</button>
+        <button type="button" class="opt" data-pick="q3" data-val="ICE">ICE</button>
+        <button type="button" class="opt" data-pick="q3" data-val="MyCall">MyCall</button>
+        <button type="button" class="opt" data-pick="q3" data-val="OneCall">OneCall</button>
+        <button type="button" class="opt" data-pick="q3" data-val="Telia">Telia</button>
+        <button type="button" class="opt" data-pick="q3" data-val="Telenor">Telenor</button>
+        <button type="button" class="opt" data-pick="q3" data-val="Talkmore">Talkmore</button>
+        <button type="button" class="opt full" data-pick="q3" data-val="Annet">Annet</button>
       </div>
       <p style="font-size:0.78rem;color:rgba(255,255,255,0.55);margin-bottom:14px;line-height:1.5;">Ved å sende inn dette skjemaet vil du bli kontaktet av Meisel AS på vegne av Talkmore. Det er én felles henvendelse – ikke separate oppringninger fra begge parter.</p>
       <label class="consent">
@@ -453,11 +453,11 @@ footer {
         <span>Ja, jeg er over 18 år og ønsker å bli kontaktet per telefon av Meisel AS og Talkmore med tilbud på mobilabonnement.</span>
       </label>
       <div id="consentErr"></div>
-      <button class="btn-accent" id="btnSend">
+      <button type="button" class="btn-accent" id="btnSend">
         Send søknad
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
       </button>
-    <p style="font-size:0.72rem;color:rgba(255,255,255,0.4);margin-top:12px;text-align:center;">Mobilpris er en tjeneste levert av Meisel AS (org.nr. 925 908 445)</p>
+      <p style="font-size:0.72rem;color:rgba(255,255,255,0.4);margin-top:12px;text-align:center;">Mobilpris er en tjeneste levert av Meisel AS (org.nr. 925 908 445)</p>
     </div>
   </div>
 
@@ -470,13 +470,13 @@ footer {
     <p class="small">🔒 Dine data behandles trygt og i samsvar med GDPR.</p>
   </div>
 
-  <!-- UNDER 18 REJECTION -->
-  <div class="ty" id="rejectUnder18">
-    <div class="emoji">🚫</div>
-    <h2>Beklager!</h2>
-    <p>Du må være 18 år eller eldre for å bruke våre tjenester.</p>
-    <p>Takk for din interesse – vi håper å se deg tilbake når du fyller 18.</p>
-    <p class="small">🔒 Ingen opplysninger er lagret.</p>
+  <!-- REJECT (Under 18) -->
+  <div class="reject" id="reject">
+    <div class="emoji">🔒</div>
+    <h2>Beklager, du må være 18 år</h2>
+    <p>Tjenesten vår er kun tilgjengelig for personer som er <strong>18 år eller eldre</strong>, ettersom du må kunne inngå avtaler på egne vegne.</p>
+    <p>Vi anbefaler at du snakker med en forelder eller foresatt som kan hjelpe deg med å finne et passende mobilabonnement.</p>
+    <p class="small">Takk for at du besøkte Mobilpris.</p>
   </div>
 </section>
 
@@ -618,7 +618,7 @@ footer {
       <p><strong>Meisel AS</strong><br>
       Org.nr.: 925 908 445<br>
       Innspurten 1B, 0663 Oslo<br>
-      E-post: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="05736c646b4568606c7660692b6b6a">[email&#160;protected]</a></p>
+      E-post: info@mobilpris.no</p>
       <p>Mobilpris er et varenavn eid og drevet av Meisel AS.</p>
     </div>
 
@@ -666,12 +666,12 @@ footer {
         <li><strong>Begrensning:</strong> Du kan be om at behandlingen av opplysningene dine begrenses.</li>
         <li><strong>Innsigelse:</strong> Du kan protestere mot behandling basert på berettiget interesse.</li>
       </ul>
-      <p>For å utøve dine rettigheter, kontakt oss på <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="55233c343b1538303c2630397b3b3a">[email&#160;protected]</a>.</p>
+      <p>For å utøve dine rettigheter, kontakt oss på info@mobilpris.no.</p>
     </div>
 
     <div class="pv-section">
       <h2>7. Trekke tilbake samtykke</h2>
-      <p>Du kan når som helst trekke tilbake samtykket ditt ved å sende en e-post til <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="205649414e604d454953454c0e4e4f">[email&#160;protected]</a>. Tilbaketrekning av samtykket påvirker ikke lovligheten av behandling som fant sted før tilbaketrekningen.</p>
+      <p>Du kan når som helst trekke tilbake samtykket ditt ved å sende en e-post til info@mobilpris.no. Tilbaketrekning av samtykket påvirker ikke lovligheten av behandling som fant sted før tilbaketrekningen.</p>
     </div>
 
     <div class="pv-section">
@@ -679,7 +679,7 @@ footer {
       <p>Dersom du mener vi behandler personopplysningene dine i strid med personvernregelverket, har du rett til å klage til Datatilsynet:</p>
       <p><strong>Datatilsynet</strong><br>
       Postboks 458 Sentrum, 0105 Oslo<br>
-      E-post: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="44342b37302f253737210420253025302d28373d2a21306a2a2b">[email&#160;protected]</a><br>
+      E-post: postkasse@datatilsynet.no<br>
       Nettside: datatilsynet.no</p>
     </div>
 
@@ -696,13 +696,13 @@ footer {
     <div class="pv-section">
       <h2>Kontakt oss</h2>
       <p>Har du spørsmål om personvern eller dine rettigheter? Kontakt oss på:<br>
-      <strong><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="24524d454a6449414d5741480a4a4b">[email&#160;protected]</a></strong></p>
+      <strong>info@mobilpris.no</strong></p>
     </div>
   </div>
 </div>
 
 <!-- COOKIE BANNER -->
-<div id="cookieBanner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:1000;background:#0d2d4a;border-top:2px solid rgba(143,227,255,0.2);padding:18px 32px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;">
+<div id="cookieBanner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:1000;background:#0d2d4a;border-top:2px solid rgba(143,227,255,0.2);padding:18px 32px;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;">
   <p style="color:rgba(255,255,255,0.8);font-size:0.85rem;margin:0;max-width:680px;line-height:1.5;">
     Vi bruker kun nødvendige informasjonskapsler for at nettsiden skal fungere. Les mer i vår <a href="#" id="cookiePvLink" style="color:#8fe3ff;text-decoration:underline;">personvernerklæring</a>.
   </p>
@@ -712,186 +712,381 @@ footer {
   </div>
 </div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-document.addEventListener('DOMContentLoaded', function() {
-  var ans = {};
+<script>
+(function () {
+  'use strict';
 
-  function clrErr(id) {
-    var el = document.getElementById(id); if (!el) return;
-    el.style.borderColor=''; el.style.boxShadow='';
-    var e=document.getElementById('e_'+id); if(e) e.remove();
-  }
-  function showErr(id, msg) {
-    var el=document.getElementById(id); if(!el) return;
-    el.style.borderColor='#ff6b6b'; el.style.boxShadow='0 0 0 2px rgba(255,107,107,0.3)';
-    var e=document.getElementById('e_'+id);
-    if(!e){e=document.createElement('span');e.id='e_'+id;e.style.cssText='color:#ff8a8a;font-size:0.79rem;margin-top:4px;display:block;';el.insertAdjacentElement('afterend',e);}
-    e.textContent=msg;
-  }
-  function validEmail(v){return /^[^\s@,]+@[^\s@,]+\.[a-zA-Z]{2,}$/.test(v);}
-  function validPhone(v){var d=v.replace(/\D/g,'');if(d.length===10&&d.startsWith('47'))d=d.slice(2);return d.length===8;}
-  function goTo(from,to){document.getElementById('s'+from).classList.remove('on');document.getElementById('s'+to).classList.add('on');document.getElementById('pFill').style.width=((from)/4*100)+'%';}
+  // ============================================================
+  // CONFIG
+  // ============================================================
+  var TOTAL_STEPS = 4;
+  var AIRTABLE_URL = 'https://api.airtable.com/v0/appFDZvEK2WMBtjoi/tblk6zq7y5eKGHVPE';
+  var AIRTABLE_KEY = 'patAnKybAUJQKKjwR.bce20bd902debaf53035257c7e4609d1cab7ca05fc0910542c769dd165fae55a';
 
-  // Step 1
-  var btn1=document.getElementById('btnNext1');
-  if(btn1) btn1.addEventListener('click',function(){
-    var name=document.getElementById('f_name').value.trim();
-    var email=document.getElementById('f_email').value.trim();
-    var phone=document.getElementById('f_phone').value.trim();
-    var ok=true;
-    if(!name){showErr('f_name','Skriv inn ditt fulle navn.');ok=false;}else clrErr('f_name');
-    if(!email){showErr('f_email','Skriv inn e-postadressen din.');ok=false;}
-    else if(!validEmail(email)){showErr('f_email','Ugyldig e-post. Eks: navn@epost.no');ok=false;}
-    else clrErr('f_email');
-    if(!phone){showErr('f_phone','Skriv inn telefonnummeret ditt.');ok=false;}
-    else if(!validPhone(phone)){showErr('f_phone','Må ha 8 sifre. Eks: 91234567');ok=false;}
-    else clrErr('f_phone');
-    if(ok) goTo(1,2);
-  });
+  // ============================================================
+  // STATE
+  // ============================================================
+  var answers = {};
+  var currentStep = 1;
 
-  // Clear errors on input
-  ['f_name','f_email','f_phone'].forEach(function(id){
-    var el=document.getElementById(id);
-    if(el) el.addEventListener('input',function(){clrErr(id);});
-  });
+  // ============================================================
+  // HELPERS
+  // ============================================================
+  function $(id) { return document.getElementById(id); }
 
-  // +47 prefix
-  var ph=document.getElementById('f_phone');
-  if(ph){
-    function addPrefix(){if(!ph.value.startsWith('+47 ')) ph.value='+47 ';}
-    ph.addEventListener('focus',addPrefix);
-    ph.addEventListener('click',addPrefix);
+  function clearError(inputId) {
+    var el = $(inputId);
+    if (!el) return;
+    el.classList.remove('err');
+    var errEl = $('e_' + inputId);
+    if (errEl) errEl.remove();
   }
 
-  // Option buttons
-  document.querySelectorAll('.opt[data-pick]').forEach(function(btn){
-    btn.addEventListener('click',function(){
-      var key=this.dataset.pick, val=this.dataset.val, next=this.dataset.next, reject=this.dataset.reject;
-      ans[key]=val;
-      this.closest('.opts').querySelectorAll('.opt').forEach(function(o){o.classList.remove('sel');});
-      this.classList.add('sel');
-      if(reject){
-        document.getElementById('formCard').style.display='none';
-        document.getElementById('rejectUnder18').style.display='block';
-        window.scrollTo({top:0,behavior:'smooth'});
-        return;
+  function showError(inputId, msg) {
+    var el = $(inputId);
+    if (!el) return;
+    el.classList.add('err');
+    var errEl = $('e_' + inputId);
+    if (!errEl) {
+      errEl = document.createElement('span');
+      errEl.id = 'e_' + inputId;
+      errEl.className = 'err-msg';
+      el.insertAdjacentElement('afterend', errEl);
+    }
+    errEl.textContent = msg;
+  }
+
+  function validEmail(v) {
+    // Must contain @ and a domain with a dot
+    return /^[^\s@,]+@[^\s@,]+\.[a-zA-Z]{2,}$/.test(v);
+  }
+
+  function validPhone(v) {
+    // Strip all non-digits, accept either 8 digits or 10 starting with 47
+    var d = v.replace(/\D/g, '');
+    if (d.length === 10 && d.indexOf('47') === 0) d = d.slice(2);
+    return d.length === 8;
+  }
+
+  // ============================================================
+  // STEP NAVIGATION (centralized — only place that touches steps)
+  // ============================================================
+  function goToStep(n) {
+    if (n < 1 || n > TOTAL_STEPS) return;
+    // Hide all steps
+    var steps = document.querySelectorAll('.form-card .step');
+    for (var i = 0; i < steps.length; i++) {
+      steps[i].classList.remove('on');
+    }
+    // Show target
+    var target = $('s' + n);
+    if (!target) return;
+    target.classList.add('on');
+    currentStep = n;
+    // Update progress bar
+    var fill = $('pFill');
+    if (fill) fill.style.width = (n / TOTAL_STEPS * 100) + '%';
+  }
+
+  function showThanks() {
+    $('formCard').style.display = 'none';
+    $('reject').style.display = 'none';
+    $('ty').style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function showReject() {
+    $('formCard').style.display = 'none';
+    $('ty').style.display = 'none';
+    $('reject').style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // ============================================================
+  // INIT
+  // ============================================================
+  document.addEventListener('DOMContentLoaded', function () {
+
+    // ---- Step 1: Validate name/email/phone, then go to step 2 ----
+    var btnNext1 = $('btnNext1');
+    if (btnNext1) {
+      btnNext1.addEventListener('click', function () {
+        var name = $('f_name').value.trim();
+        var email = $('f_email').value.trim();
+        var phone = $('f_phone').value.trim();
+        var ok = true;
+
+        if (!name) {
+          showError('f_name', 'Skriv inn ditt fulle navn.');
+          ok = false;
+        } else {
+          clearError('f_name');
+        }
+
+        if (!email) {
+          showError('f_email', 'Skriv inn e-postadressen din.');
+          ok = false;
+        } else if (!validEmail(email)) {
+          showError('f_email', 'Ugyldig e-post. Må inneholde @ og domene. Eks: navn@epost.no');
+          ok = false;
+        } else {
+          clearError('f_email');
+        }
+
+        if (!phone || phone === '+47 ') {
+          showError('f_phone', 'Skriv inn telefonnummeret ditt.');
+          ok = false;
+        } else if (!validPhone(phone)) {
+          showError('f_phone', 'Må ha 8 sifre. Eks: 91234567');
+          ok = false;
+        } else {
+          clearError('f_phone');
+        }
+
+        if (ok) goToStep(2);
+      });
+    }
+
+    // ---- Clear errors on input ----
+    ['f_name', 'f_email', 'f_phone'].forEach(function (id) {
+      var el = $(id);
+      if (el) el.addEventListener('input', function () { clearError(id); });
+    });
+
+    // ---- +47 prefix on phone ----
+    var ph = $('f_phone');
+    if (ph) {
+      function ensurePrefix() {
+        if (!ph.value.startsWith('+47 ')) ph.value = '+47 ';
       }
-      if(next){
-        var n=parseInt(next);
-        goTo(n-1,n);
+      ph.addEventListener('focus', ensurePrefix);
+      ph.addEventListener('click', ensurePrefix);
+      // Prevent deletion of prefix
+      ph.addEventListener('keydown', function (e) {
+        if ((e.key === 'Backspace' || e.key === 'Delete') && ph.value.length <= 4) {
+          e.preventDefault();
+        }
+      });
+    }
+
+    // ---- Option buttons (q1, q2, q3) ----
+    document.querySelectorAll('.opt[data-pick]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var key = this.dataset.pick;
+        var val = this.dataset.val;
+        var next = this.dataset.next;
+        var action = this.dataset.action;
+
+        answers[key] = val;
+
+        // Visual selection
+        var optsParent = this.closest('.opts');
+        if (optsParent) {
+          optsParent.querySelectorAll('.opt').forEach(function (o) { o.classList.remove('sel'); });
+        }
+        this.classList.add('sel');
+
+        // Branch: under-18 rejection
+        if (action === 'reject') {
+          setTimeout(showReject, 200);
+          return;
+        }
+
+        // Normal: advance to next step
+        if (next) {
+          var nextNum = parseInt(next, 10);
+          if (!isNaN(nextNum)) {
+            setTimeout(function () { goToStep(nextNum); }, 120);
+          }
+        }
+      });
+    });
+
+    // ---- Send button ----
+    var btnSend = $('btnSend');
+    if (btnSend) {
+      btnSend.addEventListener('click', function () {
+        var consentErr = $('consentErr');
+        consentErr.textContent = '';
+        consentErr.style.cssText = '';
+
+        if (!$('f_consent').checked) {
+          consentErr.textContent = 'Du må godta at vi kan kontakte deg for å gå videre.';
+          consentErr.style.cssText = 'color:#ff8a8a;font-size:0.79rem;margin-top:6px;display:block;';
+          return;
+        }
+
+        if (!answers.q3) {
+          consentErr.textContent = 'Velg din nåværende mobiloperatør.';
+          consentErr.style.cssText = 'color:#ff8a8a;font-size:0.79rem;margin-top:6px;display:block;';
+          return;
+        }
+
+        btnSend.textContent = 'Sender...';
+        btnSend.disabled = true;
+
+        var data = {
+          fields: {
+            'Navn': $('f_name').value.trim(),
+            'Epost': $('f_email').value.trim(),
+            'Telefon': $('f_phone').value.trim(),
+            'Betaler for familie': answers.q1 || '',
+            'Alder': answers.q2 || '',
+            'Operatør': answers.q3 || '',
+            'Tidspunkt': new Date().toLocaleString('nb-NO')
+          }
+        };
+
+        fetch(AIRTABLE_URL, {
+          method: 'POST',
+          headers: {
+            'Authorization': 'Bearer ' + AIRTABLE_KEY,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        }).then(function () {
+          showThanks();
+        }).catch(function () {
+          showThanks();
+        });
+      });
+    }
+
+    // ============================================================
+    // PERSONVERN OVERLAY
+    // ============================================================
+    var pvOverlay = $('pvOverlay');
+    var pvLink = $('pvLink');
+    var pvBack = $('pvBack');
+    var cookiePvLink = $('cookiePvLink');
+
+    function openPV(e) {
+      if (e) e.preventDefault();
+      pvOverlay.style.display = 'block';
+      window.scrollTo(0, 0);
+      history.pushState(null, '', '#personvern');
+    }
+    function closePV() {
+      pvOverlay.style.display = 'none';
+      history.pushState(null, '', window.location.pathname);
+    }
+    if (pvLink) pvLink.addEventListener('click', openPV);
+    if (pvBack) pvBack.addEventListener('click', closePV);
+    if (cookiePvLink) cookiePvLink.addEventListener('click', openPV);
+
+    if (window.location.hash === '#personvern') {
+      pvOverlay.style.display = 'block';
+      window.scrollTo(0, 0);
+    }
+
+    window.addEventListener('popstate', function () {
+      if (window.location.hash !== '#personvern') {
+        pvOverlay.style.display = 'none';
       }
     });
-  });
 
-  // Send
-  var btnSend=document.getElementById('btnSend');
-  if(btnSend) btnSend.addEventListener('click',function(){
-    var ce=document.getElementById('consentErr'); ce.textContent='';
-    if(!document.getElementById('f_consent').checked){
-      ce.textContent='Du må godta at vi kan kontakte deg for å gå videre.';
-      ce.style.cssText='color:#ff8a8a;font-size:0.79rem;margin-top:6px;display:block;'; return;
+    // ============================================================
+    // COOKIE BANNER
+    // ============================================================
+    var cookieBanner = $('cookieBanner');
+    var cookieAccept = $('cookieAccept');
+    var cookieDeny = $('cookieDeny');
+    if (cookieBanner && !localStorage.getItem('cookieChoice')) {
+      cookieBanner.style.display = 'flex';
     }
-    btnSend.textContent='Sender...'; btnSend.disabled=true;
-    var data={fields:{
-      'Navn':document.getElementById('f_name').value.trim(),
-      'Epost':document.getElementById('f_email').value.trim(),
-      'Telefon':document.getElementById('f_phone').value.trim(),
-      'Betaler for familie':ans['q1']||'',
-      'Alder':ans['q2']||'',
-      'Operatør':ans['q3']||'',
-      'Tidspunkt':new Date().toLocaleString('nb-NO')
-    }};
-    fetch('https://api.airtable.com/v0/appFDZvEK2WMBtjoi/tblk6zq7y5eKGHVPE',{
-      method:'POST',
-      headers:{'Authorization':'Bearer patAnKybAUJQKKjwR.bce20bd902debaf53035257c7e4609d1cab7ca05fc0910542c769dd165fae55a','Content-Type':'application/json'},
-      body:JSON.stringify(data)
-    }).then(function(){
-      document.getElementById('formCard').style.display='none';
-      document.getElementById('ty').style.display='block';
-      window.scrollTo({top:0,behavior:'smooth'});
-    }).catch(function(){
-      document.getElementById('formCard').style.display='none';
-      document.getElementById('ty').style.display='block';
-      window.scrollTo({top:0,behavior:'smooth'});
+    if (cookieAccept) cookieAccept.addEventListener('click', function () {
+      localStorage.setItem('cookieChoice', 'accepted');
+      cookieBanner.style.display = 'none';
     });
-  });
-
-  // Personvern
-  var pvLink=document.getElementById('pvLink');
-  var pvBack=document.getElementById('pvBack');
-  var cookiePvLink=document.getElementById('cookiePvLink');
-
-  function openPV(e){ 
-    if(e) e.preventDefault(); 
-    document.getElementById('pvOverlay').style.display='block'; 
-    window.scrollTo(0,0);
-    history.pushState(null, '', '#personvern');
-  }
-  function closePV(){ 
-    document.getElementById('pvOverlay').style.display='none'; 
-    history.pushState(null, '', window.location.pathname);
-  }
-  if(pvLink) pvLink.addEventListener('click', openPV);
-  if(pvBack) pvBack.addEventListener('click', closePV);
-  if(cookiePvLink) cookiePvLink.addEventListener('click', openPV);
-
-  // Open personvern if URL hash is #personvern on page load
-  if(window.location.hash === '#personvern') {
-    document.getElementById('pvOverlay').style.display='block';
-    window.scrollTo(0,0);
-  }
-
-  // Handle browser back button closing overlay
-  window.addEventListener('popstate', function(){
-    if(window.location.hash !== '#personvern'){
-      document.getElementById('pvOverlay').style.display='none';
-    }
-  });
-
-  // Cookie banner
-  var cookieBanner = document.getElementById('cookieBanner');
-  var cookieAccept = document.getElementById('cookieAccept');
-  var cookieDeny   = document.getElementById('cookieDeny');
-  if(!localStorage.getItem('cookieChoice')) {
-    cookieBanner.style.display = 'flex';
-  }
-  if(cookieAccept) cookieAccept.addEventListener('click', function(){
-    localStorage.setItem('cookieChoice','accepted');
-    cookieBanner.style.display='none';
-  });
-  if(cookieDeny) cookieDeny.addEventListener('click', function(){
-    localStorage.setItem('cookieChoice','denied');
-    cookieBanner.style.display='none';
-  });
-
-  // Carousel
-  var track=document.getElementById('cTrack');
-  var dotsEl=document.getElementById('cDots');
-  if(track&&dotsEl){
-    var orig=Array.from(track.children), N=orig.length;
-    orig.forEach(function(c){track.insertBefore(c.cloneNode(true),track.firstChild);});
-    orig.forEach(function(c){track.appendChild(c.cloneNode(true));});
-    var all=Array.from(track.children), cur=N;
-    for(var i=0;i<N;i++){(function(idx){
-      var d=document.createElement('button');d.className='c-dot'+(idx===0?' on':'');
-      d.addEventListener('click',function(){jumpTo(N+idx);}); dotsEl.appendChild(d);
-    })(i);}
-    function jumpTo(idx,animated){
-      if(animated===false) track.style.transition='none';
-      else track.style.transition='transform 0.48s cubic-bezier(.4,0,.2,1)';
-      cur=idx; renderC();
-    }
-    function renderC(){
-      var cw=all[0].offsetWidth+18, vw=track.parentElement.offsetWidth;
-      track.style.transform='translateX('+(vw/2-cw/2-cur*cw)+'px)';
-      all.forEach(function(c,i){c.classList.toggle('dim',Math.abs(i-cur)>1);});
-      var ri=((cur-N)%N+N)%N;
-      dotsEl.querySelectorAll('.c-dot').forEach(function(d,i){d.classList.toggle('on',i===ri);});
-    }
-    track.addEventListener('transitionend',function(){
-      if(cur<N){jumpTo(cur+N,false);requestAnimationFrame(function(){requestAnimationFrame(function(){track.style.transition='transform 0.48s cubic-bezier(.4,0,.2,1)';});});}
-      else if(cur>=2*N){jumpTo(cur-N,false);requestAnimationFrame(function(){requestAnimationFrame(function(){track.style.transition='transform 0.48s cubic-bezier(.4,0,.2,1)';});});}
+    if (cookieDeny) cookieDeny.addEventListener('click', function () {
+      localStorage.setItem('cookieChoice', 'denied');
+      cookieBanner.style.display = 'none';
     });
-    var timer=setInterval(function(){jumpTo(cur+1);},3200);
-    track.parentElement.addEventListener('mouseenter',function(){clearInterval(timer);});
-    track.parentElement.addEventLi
+
+    // ============================================================
+    // CAROUSEL
+    // ============================================================
+    var track = $('cTrack');
+    var dotsEl = $('cDots');
+    if (track && dotsEl) {
+      var orig = Array.from(track.children);
+      var N = orig.length;
+      orig.forEach(function (c) { track.insertBefore(c.cloneNode(true), track.firstChild); });
+      orig.forEach(function (c) { track.appendChild(c.cloneNode(true)); });
+      var all = Array.from(track.children);
+      var cur = N;
+
+      for (var i = 0; i < N; i++) {
+        (function (idx) {
+          var d = document.createElement('button');
+          d.className = 'c-dot' + (idx === 0 ? ' on' : '');
+          d.addEventListener('click', function () { jumpTo(N + idx); });
+          dotsEl.appendChild(d);
+        })(i);
+      }
+
+      function jumpTo(idx, animated) {
+        if (animated === false) track.style.transition = 'none';
+        else track.style.transition = 'transform 0.48s cubic-bezier(.4,0,.2,1)';
+        cur = idx;
+        renderC();
+      }
+
+      function renderC() {
+        var cw = all[0].offsetWidth + 18;
+        var vw = track.parentElement.offsetWidth;
+        track.style.transform = 'translateX(' + (vw / 2 - cw / 2 - cur * cw) + 'px)';
+        all.forEach(function (c, i) { c.classList.toggle('dim', Math.abs(i - cur) > 1); });
+        var ri = ((cur - N) % N + N) % N;
+        dotsEl.querySelectorAll('.c-dot').forEach(function (d, i) { d.classList.toggle('on', i === ri); });
+      }
+
+      track.addEventListener('transitionend', function () {
+        if (cur < N) {
+          jumpTo(cur + N, false);
+          requestAnimationFrame(function () {
+            requestAnimationFrame(function () {
+              track.style.transition = 'transform 0.48s cubic-bezier(.4,0,.2,1)';
+            });
+          });
+        } else if (cur >= 2 * N) {
+          jumpTo(cur - N, false);
+          requestAnimationFrame(function () {
+            requestAnimationFrame(function () {
+              track.style.transition = 'transform 0.48s cubic-bezier(.4,0,.2,1)';
+            });
+          });
+        }
+      });
+
+      var timer = setInterval(function () { jumpTo(cur + 1); }, 3200);
+      track.parentElement.addEventListener('mouseenter', function () { clearInterval(timer); });
+      track.parentElement.addEventListener('mouseleave', function () {
+        timer = setInterval(function () { jumpTo(cur + 1); }, 3200);
+      });
+
+      window.addEventListener('resize', renderC);
+      renderC();
+    }
+
+    // ============================================================
+    // NAV HIDE ON SCROLL
+    // ============================================================
+    var nav = $('nav');
+    var lastY = 0;
+    window.addEventListener('scroll', function () {
+      var y = window.scrollY;
+      if (nav) {
+        if (y > lastY && y > 80) nav.classList.add('hide');
+        else nav.classList.remove('hide');
+      }
+      lastY = y;
+    });
+
+    // Initialize
+    goToStep(1);
+  });
+})();
+</script>
+</body>
+</html>
