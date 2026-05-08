@@ -4,6 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Mobilpris – Finn beste mobilabonnement</title>
+<link rel="icon" type="image/png" href="MobilPris.png" />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 <style>
 /* ── RESET & BASE ── */
@@ -50,12 +51,7 @@ nav.hide { transform: translateY(-100%); }
   display: flex; align-items: center; gap: 9px;
   text-decoration: none;
 }
-.logo-bars { display: flex; align-items: flex-end; gap: 3px; height: 22px; }
-.logo-bars b { display: block; width: 5px; background: var(--accent); border-radius: 2px; }
-.logo-bars b:nth-child(1) { height: 8px; }
-.logo-bars b:nth-child(2) { height: 13px; }
-.logo-bars b:nth-child(3) { height: 18px; }
-.logo-bars b:nth-child(4) { height: 22px; }
+.logo-icon { width: 28px; height: 28px; border-radius: 6px; object-fit: contain; }
 .logo-name { font-size: 1.15rem; font-weight: 700; color: var(--white); }
 
 /* ── HERO ── */
@@ -103,7 +99,7 @@ nav.hide { transform: translateY(-100%); }
 }
 .progress-fill {
   height: 100%; background: var(--accent);
-  border-radius: 99px; width: 25%;
+  border-radius: 99px; width: 20%;
   transition: width 0.4s ease;
 }
 .step { display: none; }
@@ -123,16 +119,21 @@ nav.hide { transform: translateY(-100%); }
   color: rgba(255,255,255,0.72); margin-bottom: 5px;
 }
 .field label em { color: var(--accent); font-style: normal; }
-.field input {
+.field input, .field select {
   width: 100%; padding: 12px 14px;
   border-radius: 9px; border: 1.5px solid transparent;
   font-family: inherit; font-size: 0.93rem;
   background: #fff; color: #000; outline: none;
   transition: border-color 0.2s, box-shadow 0.2s;
 }
-.field input:focus { border-color: var(--accent2); box-shadow: 0 0 0 3px rgba(143,227,255,0.25); }
-.field input.err { border-color: #ff6b6b; box-shadow: 0 0 0 2px rgba(255,107,107,0.3); }
+.field select { cursor: pointer; }
+.field input:focus, .field select:focus { border-color: var(--accent2); box-shadow: 0 0 0 3px rgba(143,227,255,0.25); }
+.field input.err, .field select.err { border-color: #ff6b6b; box-shadow: 0 0 0 2px rgba(255,107,107,0.3); }
 .err-msg { font-size: 0.79rem; color: #ff8a8a; margin-top: 4px; display: block; }
+
+.date-row {
+  display: grid; grid-template-columns: 1fr 1.4fr 1.1fr; gap: 8px;
+}
 
 /* option buttons */
 .opts { display: flex; flex-direction: column; gap: 9px; margin-bottom: 14px; }
@@ -183,18 +184,47 @@ nav.hide { transform: translateY(-100%); }
 }
 .btn-blue:hover { background: var(--blue2); transform: translateY(-1px); }
 
+.btn-outline {
+  display: inline-flex; align-items: center; gap: 7px;
+  background: transparent;
+  border: 2px solid var(--accent); color: var(--accent);
+  border-radius: 999px;
+  padding: 13px 28px;
+  font-family: inherit; font-size: 0.93rem; font-weight: 700;
+  cursor: pointer; transition: background 0.2s, transform 0.15s, color 0.2s;
+  text-decoration: none; width: 100%; justify-content: center;
+  margin-top: 10px;
+}
+.btn-outline:hover { background: var(--accent); color: var(--navy); transform: translateY(-1px); }
+
 /* ── THANK YOU & REJECT ── */
-.ty, .reject {
+.ty, .ty-final, .reject {
   display: none; text-align: center;
   background: rgba(255,255,255,0.07);
   border: 1.5px solid rgba(143,227,255,0.2);
   border-radius: 16px; padding: 40px 30px;
   width: 100%; max-width: 480px;
 }
-.ty .emoji, .reject .emoji { font-size: 3rem; margin-bottom: 14px; }
-.ty h2, .reject h2 { font-size: 1.5rem; font-weight: 800; color: #fff; margin-bottom: 10px; }
-.ty p, .reject p { color: rgba(255,255,255,0.75); line-height: 1.7; margin-bottom: 8px; font-size: 0.95rem; }
-.ty .small, .reject .small { font-size: 0.82rem; color: rgba(255,255,255,0.45); margin-top: 16px; }
+.ty .emoji, .ty-final .emoji, .reject .emoji { font-size: 3rem; margin-bottom: 14px; }
+.ty h2, .ty-final h2, .reject h2 { font-size: 1.5rem; font-weight: 800; color: #fff; margin-bottom: 10px; }
+.ty p, .ty-final p, .reject p { color: rgba(255,255,255,0.75); line-height: 1.7; margin-bottom: 8px; font-size: 0.95rem; }
+.ty .small, .ty-final .small, .reject .small { font-size: 0.82rem; color: rgba(255,255,255,0.45); margin-top: 16px; }
+
+.ty-divider {
+  border: none; border-top: 1px solid rgba(143,227,255,0.18);
+  margin: 22px 0 18px;
+}
+
+/* ── BONUS CARD ── */
+.bonus-card {
+  display: none;
+  background: rgba(255,255,255,0.07);
+  border: 1.5px solid rgba(143,227,255,0.2);
+  border-radius: 16px;
+  padding: 28px 30px;
+  width: 100%; max-width: 480px;
+  animation: up 0.3s ease;
+}
 
 /* ── SECTIONS ── */
 .sec { padding: 80px 64px; }
@@ -351,6 +381,7 @@ footer {
   .c-card { min-width: calc(80vw); max-width: calc(80vw); }
   .fade-l, .fade-r { width: 40px; }
   .opts.g2 { grid-template-columns: 1fr 1fr; }
+  .date-row { grid-template-columns: 1fr 1.4fr 1.1fr; }
 }
 </style>
 </head>
@@ -359,7 +390,7 @@ footer {
 <!-- NAV -->
 <nav id="nav">
   <a href="#" class="logo">
-    <div class="logo-bars"><b></b><b></b><b></b><b></b></div>
+    <img src="MobilPris.png" alt="Mobilpris" class="logo-icon" />
     <span class="logo-name">Mobilpris</span>
   </a>
 </nav>
@@ -384,13 +415,87 @@ footer {
     </div>
   </div>
 
-  <!-- FORM -->
+  <!-- ====== MAIN FORM ====== -->
   <div class="form-card" id="formCard">
     <div class="progress-bar"><div class="progress-fill" id="pFill"></div></div>
 
-    <!-- Step 1 -->
+    <!-- Step 1: Family / Self -->
     <div class="step on" id="s1" data-step="1">
-      <div class="step-label">Steg 1 av 4 — Kontaktinfo</div>
+      <div class="step-label">Steg 1 av 5</div>
+      <div class="step-q">Betaler du mobilabonnement for deg selv eller andre i familien?</div>
+      <div class="opts">
+        <button type="button" class="opt" data-pick="q1" data-val="Bare meg selv" data-next="2">📱 &nbsp;Bare meg selv</button>
+        <button type="button" class="opt" data-pick="q1" data-val="Meg selv og familie" data-next="2">👨‍👩‍👧‍👦 &nbsp;Meg selv og andre i familien</button>
+      </div>
+    </div>
+
+    <!-- Step 2: Birth date -->
+    <div class="step" id="s2" data-step="2">
+      <div class="step-label">Steg 2 av 5</div>
+      <div class="step-q">Hva er din fødselsdato?</div>
+      <div class="date-row">
+        <div class="field">
+          <label>Dag <em>*</em></label>
+          <select id="f_bday">
+            <option value="">Dag</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Måned <em>*</em></label>
+          <select id="f_bmonth">
+            <option value="">Måned</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>År <em>*</em></label>
+          <select id="f_byear">
+            <option value="">År</option>
+          </select>
+        </div>
+      </div>
+      <div id="dateErr"></div>
+      <button type="button" class="btn-accent" id="btnNext2">
+        Neste
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </button>
+    </div>
+
+    <!-- Step 3: GB data -->
+    <div class="step" id="s3" data-step="3">
+      <div class="step-label">Steg 3 av 5</div>
+      <div class="step-q">Hvor mange GB data har du på ditt nåværende mobilabonnement?</div>
+      <div class="opts g2">
+        <button type="button" class="opt" data-pick="qgb" data-val="1-3 GB" data-next="4">1 – 3 GB</button>
+        <button type="button" class="opt" data-pick="qgb" data-val="5 GB" data-next="4">5 GB</button>
+        <button type="button" class="opt" data-pick="qgb" data-val="8-10 GB" data-next="4">8 – 10 GB</button>
+        <button type="button" class="opt" data-pick="qgb" data-val="12-15 GB" data-next="4">12 – 15 GB</button>
+        <button type="button" class="opt" data-pick="qgb" data-val="20-30 GB" data-next="4">20 – 30 GB</button>
+        <button type="button" class="opt" data-pick="qgb" data-val="Fri data" data-next="4">Fri data</button>
+        <button type="button" class="opt full" data-pick="qgb" data-val="Ikke sikker" data-next="4">🤷 &nbsp;Jeg er ikke sikker</button>
+      </div>
+    </div>
+
+    <!-- Step 4: Current operator -->
+    <div class="step" id="s4" data-step="4">
+      <div class="step-label">Steg 4 av 5</div>
+      <div class="step-q">Hva er din nåværende mobiloperatør?</div>
+      <div class="opts g2">
+        <button type="button" class="opt" data-pick="q3" data-val="Bedriftsabonnement" data-next="5">Jeg har bedriftsabonnement</button>
+        <button type="button" class="opt" data-pick="q3" data-val="Fjordkraft" data-next="5">Fjordkraft</button>
+        <button type="button" class="opt" data-pick="q3" data-val="ICE" data-next="5">ICE</button>
+        <button type="button" class="opt" data-pick="q3" data-val="MyCall" data-next="5">MyCall</button>
+        <button type="button" class="opt" data-pick="q3" data-val="OneCall" data-next="5">OneCall</button>
+        <button type="button" class="opt" data-pick="q3" data-val="Telia" data-next="5">Telia</button>
+        <button type="button" class="opt" data-pick="q3" data-val="Telenor" data-next="5">Telenor</button>
+        <button type="button" class="opt" data-pick="q3" data-val="Talkmore" data-next="5">Talkmore</button>
+        <button type="button" class="opt full" data-pick="q3" data-val="Annet" data-next="5">Annet</button>
+      </div>
+    </div>
+
+    <!-- Step 5: Contact info (last step) -->
+    <div class="step" id="s5" data-step="5">
+      <div class="step-label">Steg 5 av 5 — Kontaktinfo</div>
+      <div class="step-q">Nesten ferdig! Fyll inn dine kontaktopplysninger.</div>
       <div class="field">
         <label>Fullt navn <em>*</em></label>
         <input type="text" id="f_name" placeholder="Ditt for- og etternavn" />
@@ -402,50 +507,6 @@ footer {
       <div class="field">
         <label>Telefonnummer <em>*</em></label>
         <input type="tel" id="f_phone" placeholder="91234567" />
-      </div>
-      <button type="button" class="btn-accent" id="btnNext1">
-        Neste
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-      </button>
-    </div>
-
-    <!-- Step 2 -->
-    <div class="step" id="s2" data-step="2">
-      <div class="step-label">Steg 2 av 4</div>
-      <div class="step-q">Betaler du mobilabonnement for deg selv eller andre i familien?</div>
-      <div class="opts">
-        <button type="button" class="opt" data-pick="q1" data-val="Ja" data-next="3">✓ &nbsp;Ja</button>
-        <button type="button" class="opt" data-pick="q1" data-val="Nei" data-next="3">✕ &nbsp;Nei</button>
-      </div>
-    </div>
-
-    <!-- Step 3 -->
-    <div class="step" id="s3" data-step="3">
-      <div class="step-label">Steg 3 av 4</div>
-      <div class="step-q">Hvor gammel er du?</div>
-      <div class="opts g2">
-        <button type="button" class="opt" data-pick="q2" data-val="45+" data-next="4">45+</button>
-        <button type="button" class="opt" data-pick="q2" data-val="31-45" data-next="4">31 – 45</button>
-        <button type="button" class="opt" data-pick="q2" data-val="25-30" data-next="4">25 – 30</button>
-        <button type="button" class="opt" data-pick="q2" data-val="18-24" data-next="4">18 – 24</button>
-        <button type="button" class="opt full" data-pick="q2" data-val="Under 18" data-action="reject">Under 18</button>
-      </div>
-    </div>
-
-    <!-- Step 4 -->
-    <div class="step" id="s4" data-step="4">
-      <div class="step-label">Steg 4 av 4</div>
-      <div class="step-q">Hva er din nåværende mobiloperatør?</div>
-      <div class="opts g2">
-        <button type="button" class="opt" data-pick="q3" data-val="Bedriftsabonnement">Jeg har bedriftsabonnement</button>
-        <button type="button" class="opt" data-pick="q3" data-val="Fjordkraft">Fjordkraft</button>
-        <button type="button" class="opt" data-pick="q3" data-val="ICE">ICE</button>
-        <button type="button" class="opt" data-pick="q3" data-val="MyCall">MyCall</button>
-        <button type="button" class="opt" data-pick="q3" data-val="OneCall">OneCall</button>
-        <button type="button" class="opt" data-pick="q3" data-val="Telia">Telia</button>
-        <button type="button" class="opt" data-pick="q3" data-val="Telenor">Telenor</button>
-        <button type="button" class="opt" data-pick="q3" data-val="Talkmore">Talkmore</button>
-        <button type="button" class="opt full" data-pick="q3" data-val="Annet">Annet</button>
       </div>
       <p style="font-size:0.78rem;color:rgba(255,255,255,0.55);margin-bottom:14px;line-height:1.5;">Ved å sende inn dette skjemaet vil du bli kontaktet av Meisel AS på vegne av Talkmore. Det er én felles henvendelse – ikke separate oppringninger fra begge parter.</p>
       <label class="consent">
@@ -461,16 +522,50 @@ footer {
     </div>
   </div>
 
-  <!-- THANK YOU -->
+  <!-- ====== THANK YOU (with bonus CTA) ====== -->
   <div class="ty" id="ty">
     <div class="emoji">🎉</div>
     <h2>Takk for søknaden!</h2>
     <p>Vi er allerede i gang med å jakte de beste mobilavtalene for deg.</p>
     <p>En av våre rådgivere vil ringe deg snart med et godt tilbud.</p>
+    <hr class="ty-divider" />
+    <p style="font-weight:600;color:#fff;">Vil du få et enda bedre og mer tilpasset tilbud?</p>
+    <p style="font-size:0.88rem;">Svar på ett ekstra spørsmål, så kan vi finne noe som passer deg enda bedre.</p>
+    <button type="button" class="btn-accent" id="btnBonus" style="margin-top:16px;">
+      Fortsett for bedre tilbud
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+    </button>
     <p class="small">🔒 Dine data behandles trygt og i samsvar med GDPR.</p>
   </div>
 
-  <!-- REJECT (Under 18) -->
+  <!-- ====== BONUS: Dekning question ====== -->
+  <div class="bonus-card" id="bonusCard">
+    <div class="step-label">Bonusspørsmål</div>
+    <div class="step-q">Hvilken dekning/mobilnett foretrekker du?</div>
+    <p style="font-size:0.82rem;color:rgba(255,255,255,0.55);margin-bottom:14px;line-height:1.5;">I Norge finnes det tre mobilnett. Velg det nettverket du ønsker, eller «Vet ikke» om du er usikker.</p>
+    <div class="opts">
+      <button type="button" class="opt bonus-opt" data-val="Telenor-nett">📡 &nbsp;Telenor-nett <span style="font-weight:400;font-size:0.8rem;opacity:0.7;">– bredest dekning</span></button>
+      <button type="button" class="opt bonus-opt" data-val="Telia-nett">📡 &nbsp;Telia-nett <span style="font-weight:400;font-size:0.8rem;opacity:0.7;">– best 5G i byer</span></button>
+      <button type="button" class="opt bonus-opt" data-val="Ice-nett">📡 &nbsp;Ice-nett <span style="font-weight:400;font-size:0.8rem;opacity:0.7;">– lavest pris</span></button>
+      <button type="button" class="opt bonus-opt" data-val="Vet ikke">🤷 &nbsp;Vet ikke / Ikke sikker</button>
+    </div>
+    <div id="bonusErr"></div>
+    <button type="button" class="btn-accent" id="btnBonusSend">
+      Send svar
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+    </button>
+  </div>
+
+  <!-- ====== FINAL THANK YOU (after bonus) ====== -->
+  <div class="ty-final" id="tyFinal">
+    <div class="emoji">✅</div>
+    <h2>Tusen takk!</h2>
+    <p>Vi har nå all informasjonen vi trenger for å finne det beste tilbudet for deg.</p>
+    <p>En av våre rådgivere vil ta kontakt med deg snart med et skreddersydd tilbud.</p>
+    <p class="small">🔒 Dine data behandles trygt og i samsvar med GDPR.</p>
+  </div>
+
+  <!-- ====== REJECT (Under 18) ====== -->
   <div class="reject" id="reject">
     <div class="emoji">🔒</div>
     <h2>Beklager, du må være 18 år</h2>
@@ -578,7 +673,7 @@ footer {
   <div class="footer-inner">
     <div>
       <a href="#" class="footer-logo">
-        <div class="logo-bars"><b></b><b></b><b></b><b></b></div>
+        <img src="MobilPris.png" alt="Mobilpris" style="width:22px;height:22px;border-radius:4px;object-fit:contain;" />
         Mobilpris
       </a>
       <div class="footer-row">
@@ -629,7 +724,9 @@ footer {
         <li>Fullt navn</li>
         <li>E-postadresse</li>
         <li>Telefonnummer</li>
+        <li>Fødselsdato</li>
         <li>Informasjon om nåværende mobilabonnement og bruksmønster</li>
+        <li>Ønsket dekning/mobilnett (valgfritt)</li>
         <li>Tidspunkt for innsending</li>
       </ul>
     </div>
@@ -719,7 +816,7 @@ footer {
   // ============================================================
   // CONFIG
   // ============================================================
-  var TOTAL_STEPS = 4;
+  var TOTAL_STEPS = 5;
   var AIRTABLE_URL = 'https://api.airtable.com/v0/appFDZvEK2WMBtjoi/tblk6zq7y5eKGHVPE';
   var AIRTABLE_KEY = 'patAnKybAUJQKKjwR.bce20bd902debaf53035257c7e4609d1cab7ca05fc0910542c769dd165fae55a';
 
@@ -728,6 +825,7 @@ footer {
   // ============================================================
   var answers = {};
   var currentStep = 1;
+  var bonusAnswer = '';
 
   // ============================================================
   // HELPERS
@@ -757,33 +855,28 @@ footer {
   }
 
   function validEmail(v) {
-    // Must contain @ and a domain with a dot
     return /^[^\s@,]+@[^\s@,]+\.[a-zA-Z]{2,}$/.test(v);
   }
 
   function validPhone(v) {
-    // Strip all non-digits, accept either 8 digits or 10 starting with 47
     var d = v.replace(/\D/g, '');
     if (d.length === 10 && d.indexOf('47') === 0) d = d.slice(2);
     return d.length === 8;
   }
 
   // ============================================================
-  // STEP NAVIGATION (centralized — only place that touches steps)
+  // STEP NAVIGATION
   // ============================================================
   function goToStep(n) {
     if (n < 1 || n > TOTAL_STEPS) return;
-    // Hide all steps
     var steps = document.querySelectorAll('.form-card .step');
     for (var i = 0; i < steps.length; i++) {
       steps[i].classList.remove('on');
     }
-    // Show target
     var target = $('s' + n);
     if (!target) return;
     target.classList.add('on');
     currentStep = n;
-    // Update progress bar
     var fill = $('pFill');
     if (fill) fill.style.width = (n / TOTAL_STEPS * 100) + '%';
   }
@@ -791,6 +884,8 @@ footer {
   function showThanks() {
     $('formCard').style.display = 'none';
     $('reject').style.display = 'none';
+    $('bonusCard').style.display = 'none';
+    $('tyFinal').style.display = 'none';
     $('ty').style.display = 'block';
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
@@ -798,8 +893,72 @@ footer {
   function showReject() {
     $('formCard').style.display = 'none';
     $('ty').style.display = 'none';
+    $('bonusCard').style.display = 'none';
+    $('tyFinal').style.display = 'none';
     $('reject').style.display = 'block';
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function showBonus() {
+    $('ty').style.display = 'none';
+    $('bonusCard').style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function showFinalThanks() {
+    $('bonusCard').style.display = 'none';
+    $('tyFinal').style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // ============================================================
+  // DATE HELPERS
+  // ============================================================
+  function populateDateDropdowns() {
+    var dayEl = $('f_bday');
+    var monthEl = $('f_bmonth');
+    var yearEl = $('f_byear');
+
+    // Days 1-31
+    for (var d = 1; d <= 31; d++) {
+      var opt = document.createElement('option');
+      opt.value = d;
+      opt.textContent = d;
+      dayEl.appendChild(opt);
+    }
+
+    // Months
+    var months = ['Januar','Februar','Mars','April','Mai','Juni','Juli','August','September','Oktober','November','Desember'];
+    for (var m = 0; m < months.length; m++) {
+      var opt = document.createElement('option');
+      opt.value = m + 1;
+      opt.textContent = months[m];
+      monthEl.appendChild(opt);
+    }
+
+    // Years (current year down to 1920)
+    var thisYear = new Date().getFullYear();
+    for (var y = thisYear; y >= 1920; y--) {
+      var opt = document.createElement('option');
+      opt.value = y;
+      opt.textContent = y;
+      yearEl.appendChild(opt);
+    }
+  }
+
+  function isValidDate(d, m, y) {
+    var date = new Date(y, m - 1, d);
+    return date.getFullYear() === y && date.getMonth() === m - 1 && date.getDate() === d;
+  }
+
+  function calculateAge(d, m, y) {
+    var today = new Date();
+    var age = today.getFullYear() - y;
+    var monthDiff = today.getMonth() - (m - 1);
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < d)) {
+      age--;
+    }
+    return age;
   }
 
   // ============================================================
@@ -807,10 +966,133 @@ footer {
   // ============================================================
   document.addEventListener('DOMContentLoaded', function () {
 
-    // ---- Step 1: Validate name/email/phone, then go to step 2 ----
-    var btnNext1 = $('btnNext1');
-    if (btnNext1) {
-      btnNext1.addEventListener('click', function () {
+    // Populate date dropdowns
+    populateDateDropdowns();
+
+    // ---- Step 2: Validate birth date, check age ----
+    var btnNext2 = $('btnNext2');
+    if (btnNext2) {
+      btnNext2.addEventListener('click', function () {
+        var day = parseInt($('f_bday').value, 10);
+        var month = parseInt($('f_bmonth').value, 10);
+        var year = parseInt($('f_byear').value, 10);
+        var dateErr = $('dateErr');
+        dateErr.textContent = '';
+        dateErr.style.cssText = '';
+
+        // Clear select errors
+        ['f_bday','f_bmonth','f_byear'].forEach(function(id) {
+          $(id).classList.remove('err');
+        });
+
+        if (!day || !month || !year) {
+          dateErr.textContent = 'Vennligst fyll inn dag, måned og år.';
+          dateErr.style.cssText = 'color:#ff8a8a;font-size:0.79rem;margin-top:6px;display:block;';
+          if (!day) $('f_bday').classList.add('err');
+          if (!month) $('f_bmonth').classList.add('err');
+          if (!year) $('f_byear').classList.add('err');
+          return;
+        }
+
+        if (!isValidDate(day, month, year)) {
+          dateErr.textContent = 'Ugyldig dato. Vennligst sjekk dag, måned og år.';
+          dateErr.style.cssText = 'color:#ff8a8a;font-size:0.79rem;margin-top:6px;display:block;';
+          return;
+        }
+
+        var age = calculateAge(day, month, year);
+        if (age < 18) {
+          showReject();
+          return;
+        }
+
+        // Store formatted date
+        var dayStr = day < 10 ? '0' + day : '' + day;
+        var monthStr = month < 10 ? '0' + month : '' + month;
+        answers.birthdate = dayStr + '.' + monthStr + '.' + year;
+
+        goToStep(3);
+      });
+    }
+
+    // ---- Clear date errors on change ----
+    ['f_bday','f_bmonth','f_byear'].forEach(function(id) {
+      var el = $(id);
+      if (el) el.addEventListener('change', function () {
+        $(id).classList.remove('err');
+        var dateErr = $('dateErr');
+        dateErr.textContent = '';
+        dateErr.style.cssText = '';
+      });
+    });
+
+    // ---- +47 prefix on phone ----
+    var ph = $('f_phone');
+    if (ph) {
+      function ensurePrefix() {
+        if (!ph.value.startsWith('+47 ')) ph.value = '+47 ';
+      }
+      ph.addEventListener('focus', ensurePrefix);
+      ph.addEventListener('click', ensurePrefix);
+      ph.addEventListener('keydown', function (e) {
+        if ((e.key === 'Backspace' || e.key === 'Delete') && ph.value.length <= 4) {
+          e.preventDefault();
+        }
+      });
+    }
+
+    // ---- Option buttons (all steps with data-pick) ----
+    document.querySelectorAll('.opt[data-pick]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var key = this.dataset.pick;
+        var val = this.dataset.val;
+        var next = this.dataset.next;
+
+        answers[key] = val;
+
+        // Visual selection
+        var optsParent = this.closest('.opts');
+        if (optsParent) {
+          optsParent.querySelectorAll('.opt').forEach(function (o) { o.classList.remove('sel'); });
+        }
+        this.classList.add('sel');
+
+        // Advance to next step
+        if (next) {
+          var nextNum = parseInt(next, 10);
+          if (!isNaN(nextNum)) {
+            setTimeout(function () { goToStep(nextNum); }, 120);
+          }
+        }
+      });
+    });
+
+    // ---- Bonus option buttons ----
+    document.querySelectorAll('.bonus-opt').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        bonusAnswer = this.dataset.val;
+        var optsParent = this.closest('.opts');
+        if (optsParent) {
+          optsParent.querySelectorAll('.opt').forEach(function (o) { o.classList.remove('sel'); });
+        }
+        this.classList.add('sel');
+      });
+    });
+
+    // ---- Clear contact errors on input ----
+    ['f_name', 'f_email', 'f_phone'].forEach(function (id) {
+      var el = $(id);
+      if (el) el.addEventListener('input', function () { clearError(id); });
+    });
+
+    // ---- Send button (Step 5) ----
+    var btnSend = $('btnSend');
+    if (btnSend) {
+      btnSend.addEventListener('click', function () {
+        var consentErr = $('consentErr');
+        consentErr.textContent = '';
+        consentErr.style.cssText = '';
+
         var name = $('f_name').value.trim();
         var email = $('f_email').value.trim();
         var phone = $('f_phone').value.trim();
@@ -843,95 +1125,25 @@ footer {
           clearError('f_phone');
         }
 
-        if (ok) goToStep(2);
-      });
-    }
-
-    // ---- Clear errors on input ----
-    ['f_name', 'f_email', 'f_phone'].forEach(function (id) {
-      var el = $(id);
-      if (el) el.addEventListener('input', function () { clearError(id); });
-    });
-
-    // ---- +47 prefix on phone ----
-    var ph = $('f_phone');
-    if (ph) {
-      function ensurePrefix() {
-        if (!ph.value.startsWith('+47 ')) ph.value = '+47 ';
-      }
-      ph.addEventListener('focus', ensurePrefix);
-      ph.addEventListener('click', ensurePrefix);
-      // Prevent deletion of prefix
-      ph.addEventListener('keydown', function (e) {
-        if ((e.key === 'Backspace' || e.key === 'Delete') && ph.value.length <= 4) {
-          e.preventDefault();
-        }
-      });
-    }
-
-    // ---- Option buttons (q1, q2, q3) ----
-    document.querySelectorAll('.opt[data-pick]').forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        var key = this.dataset.pick;
-        var val = this.dataset.val;
-        var next = this.dataset.next;
-        var action = this.dataset.action;
-
-        answers[key] = val;
-
-        // Visual selection
-        var optsParent = this.closest('.opts');
-        if (optsParent) {
-          optsParent.querySelectorAll('.opt').forEach(function (o) { o.classList.remove('sel'); });
-        }
-        this.classList.add('sel');
-
-        // Branch: under-18 rejection
-        if (action === 'reject') {
-          setTimeout(showReject, 200);
-          return;
-        }
-
-        // Normal: advance to next step
-        if (next) {
-          var nextNum = parseInt(next, 10);
-          if (!isNaN(nextNum)) {
-            setTimeout(function () { goToStep(nextNum); }, 120);
-          }
-        }
-      });
-    });
-
-    // ---- Send button ----
-    var btnSend = $('btnSend');
-    if (btnSend) {
-      btnSend.addEventListener('click', function () {
-        var consentErr = $('consentErr');
-        consentErr.textContent = '';
-        consentErr.style.cssText = '';
-
         if (!$('f_consent').checked) {
           consentErr.textContent = 'Du må godta at vi kan kontakte deg for å gå videre.';
           consentErr.style.cssText = 'color:#ff8a8a;font-size:0.79rem;margin-top:6px;display:block;';
-          return;
+          ok = false;
         }
 
-        if (!answers.q3) {
-          consentErr.textContent = 'Velg din nåværende mobiloperatør.';
-          consentErr.style.cssText = 'color:#ff8a8a;font-size:0.79rem;margin-top:6px;display:block;';
-          return;
-        }
+        if (!ok) return;
 
         btnSend.textContent = 'Sender...';
         btnSend.disabled = true;
 
         var data = {
           fields: {
-            'Navn': $('f_name').value.trim(),
-            'Epost': $('f_email').value.trim(),
-            'Telefon': $('f_phone').value.trim(),
+            'Navn': name,
+            'Epost': email,
+            'Telefon': phone,
             'Betaler for familie': answers.q1 || '',
-            'Alder': answers.q2 || '',
+            'Fødselsdato': answers.birthdate || '',
+            'GB datapakke': answers.qgb || '',
             'Operatør': answers.q3 || '',
             'Tidspunkt': new Date().toLocaleString('nb-NO')
           }
@@ -948,6 +1160,56 @@ footer {
           showThanks();
         }).catch(function () {
           showThanks();
+        });
+      });
+    }
+
+    // ---- Bonus CTA button ----
+    var btnBonus = $('btnBonus');
+    if (btnBonus) {
+      btnBonus.addEventListener('click', function () {
+        showBonus();
+      });
+    }
+
+    // ---- Bonus Send button ----
+    var btnBonusSend = $('btnBonusSend');
+    if (btnBonusSend) {
+      btnBonusSend.addEventListener('click', function () {
+        var bonusErr = $('bonusErr');
+        bonusErr.textContent = '';
+        bonusErr.style.cssText = '';
+
+        if (!bonusAnswer) {
+          bonusErr.textContent = 'Vennligst velg en dekning.';
+          bonusErr.style.cssText = 'color:#ff8a8a;font-size:0.79rem;margin-top:6px;display:block;';
+          return;
+        }
+
+        btnBonusSend.textContent = 'Sender...';
+        btnBonusSend.disabled = true;
+
+        var data = {
+          fields: {
+            'Navn': $('f_name').value.trim(),
+            'Epost': $('f_email').value.trim(),
+            'Telefon': $('f_phone').value.trim(),
+            'Ønsket dekning': bonusAnswer,
+            'Tidspunkt': new Date().toLocaleString('nb-NO')
+          }
+        };
+
+        fetch(AIRTABLE_URL, {
+          method: 'POST',
+          headers: {
+            'Authorization': 'Bearer ' + AIRTABLE_KEY,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        }).then(function () {
+          showFinalThanks();
+        }).catch(function () {
+          showFinalThanks();
         });
       });
     }
