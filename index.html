@@ -826,6 +826,7 @@ footer {
   var answers = {};
   var currentStep = 1;
   var bonusAnswer = '';
+  var recordId = '';
 
   // ============================================================
   // HELPERS
@@ -1156,7 +1157,10 @@ footer {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify(data)
-        }).then(function () {
+        }).then(function (res) {
+          return res.json();
+        }).then(function (json) {
+          if (json && json.id) recordId = json.id;
           showThanks();
         }).catch(function () {
           showThanks();
@@ -1191,16 +1195,16 @@ footer {
 
         var data = {
           fields: {
-            'Navn': $('f_name').value.trim(),
-            'Epost': $('f_email').value.trim(),
-            'Telefon': $('f_phone').value.trim(),
-            'Ønsket dekning': bonusAnswer,
-            'Tidspunkt': new Date().toLocaleString('nb-NO')
+            'Ønsket dekning': bonusAnswer
           }
         };
 
-        fetch(AIRTABLE_URL, {
-          method: 'POST',
+        // If we have the record ID, update the existing row; otherwise create new
+        var url = recordId ? AIRTABLE_URL + '/' + recordId : AIRTABLE_URL;
+        var method = recordId ? 'PATCH' : 'POST';
+
+        fetch(url, {
+          method: method,
           headers: {
             'Authorization': 'Bearer ' + AIRTABLE_KEY,
             'Content-Type': 'application/json'
