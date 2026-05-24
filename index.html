@@ -5,23 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Mobilpris – Finn beste mobilabonnement</title>
 
-<!-- Meta Pixel Code -->
-<script>
-!function(f,b,e,v,n,t,s)
-{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];
-s.parentNode.insertBefore(t,s)}(window, document,'script',
-'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', '942017291993096');
-fbq('track', 'PageView');
-</script>
-<noscript><img height="1" width="1" style="display:none"
-src="https://www.facebook.com/tr?id=942017291993096&ev=PageView&noscript=1"
-/></noscript>
-<!-- End Meta Pixel Code -->
+<!-- Meta Pixel Code — ONLY loaded after cookie consent via JS -->
+<!-- No pixel fires on page load anymore. See initMetaPixel() in script. -->
 
 <link rel="icon" type="image/png" href="MobilPris.png" />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -328,6 +313,15 @@ nav.hide { transform: translateY(-100%); }
 }
 .c-dot.on { background: var(--blue); transform: scale(1.35); }
 
+/* ── TESTIMONIAL DISCLAIMER ── */
+.testimonial-disclaimer {
+  text-align: center;
+  font-size: 0.76rem;
+  color: var(--muted);
+  opacity: 0.7;
+  margin-top: 18px;
+}
+
 /* ── FOOTER ── */
 footer {
   background: var(--navy);
@@ -335,7 +329,7 @@ footer {
 }
 .footer-inner {
   max-width: 1100px; margin: 0 auto;
-  display: grid; grid-template-columns: 1fr auto;
+  display: grid; grid-template-columns: 1fr auto auto;
   gap: 60px; margin-bottom: 32px;
 }
 .footer-logo {
@@ -351,7 +345,7 @@ footer {
 .footer-nav-title { font-weight: 700; font-size: 0.93rem; color: #fff; margin-bottom: 11px; }
 .footer-nav { list-style: none; }
 .footer-nav li { margin-bottom: 7px; }
-.footer-nav a { text-decoration: none; color: rgba(255,255,255,0.62); font-size: 0.87rem; transition: color 0.2s; }
+.footer-nav a { text-decoration: none; color: rgba(255,255,255,0.62); font-size: 0.87rem; transition: color 0.2s; cursor:pointer; }
 .footer-nav a:hover { color: var(--accent); }
 .footer-bottom {
   border-top: 1px solid rgba(255,255,255,0.08);
@@ -359,7 +353,7 @@ footer {
 }
 .footer-bottom p { font-size: 0.77rem; color: rgba(255,255,255,0.35); }
 
-/* ── PERSONVERN OVERLAY ── */
+/* ── OVERLAY (shared for personvern, brukervilkår, cookies) ── */
 .pv-overlay {
   display: none; position: fixed; inset: 0;
   background: var(--bg); z-index: 999; overflow-y: auto;
@@ -385,6 +379,22 @@ footer {
 .pv-section ul li { color: var(--muted); font-size: 0.95rem; line-height: 1.7; margin-bottom: 4px; }
 .pv-section strong { color: var(--text); }
 
+/* ── NAV TABS inside overlay ── */
+.pv-tabs {
+  display: flex; gap: 0; margin-bottom: 32px; border-bottom: 2px solid #d8eef8;
+}
+.pv-tab {
+  padding: 10px 20px;
+  font-family: inherit; font-size: 0.88rem; font-weight: 600;
+  color: var(--muted); background: none; border: none;
+  cursor: pointer; border-bottom: 2px solid transparent;
+  margin-bottom: -2px; transition: color 0.2s, border-color 0.2s;
+}
+.pv-tab:hover { color: var(--blue); }
+.pv-tab.active { color: var(--blue); border-bottom-color: var(--blue); }
+.pv-tab-content { display: none; }
+.pv-tab-content.active { display: block; animation: up 0.3s ease; }
+
 /* ── MOBILE ── */
 @media (max-width: 860px) {
   nav { padding: 0 20px; }
@@ -401,6 +411,8 @@ footer {
   .fade-l, .fade-r { width: 40px; }
   .opts.g2 { grid-template-columns: 1fr 1fr; }
   .date-row { grid-template-columns: 1fr 1.4fr 1.1fr; }
+  .pv-tabs { flex-wrap: wrap; }
+  .pv-tab { font-size: 0.82rem; padding: 8px 14px; }
 }
 </style>
 </head>
@@ -417,7 +429,8 @@ footer {
 <!-- HERO -->
 <section class="hero">
   <h1>Få tilbud på <span>mobilabonnement</span></h1>
-  <p class="hero-sub">Vi sammenligner mobilabonnement for deg. Gjennom en enkel søknad finner vi et tilbud som passer dine behov.</p>
+  <!-- FIX #2: Removed "sammenligner" claim -->
+  <p class="hero-sub">Vi finner gode tilbud på mobilabonnement for deg. Gjennom et enkelt skjema finner vi et tilbud som passer dine behov.</p>
 
   <div class="badges">
     <div class="badge">
@@ -430,7 +443,7 @@ footer {
     </div>
     <div class="badge">
       <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
-      Enkel søknad
+      Enkelt skjema
     </div>
   </div>
 
@@ -527,14 +540,17 @@ footer {
         <label>Telefonnummer <em>*</em></label>
         <input type="tel" id="f_phone" placeholder="91234567" />
       </div>
-      <p style="font-size:0.78rem;color:rgba(255,255,255,0.55);margin-bottom:14px;line-height:1.5;">Ved å sende inn dette skjemaet vil du bli kontaktet av Meisel AS på vegne av Talkmore. Det er én felles henvendelse – ikke separate oppringninger fra begge parter.</p>
+      <!-- FIX #1: Updated disclaimer text for lead-sharing model -->
+      <p style="font-size:0.78rem;color:rgba(255,255,255,0.55);margin-bottom:14px;line-height:1.5;">Ved å sende inn dette skjemaet samtykker du til at Meisel AS, på vegne av seg selv og sine samarbeidspartnere innen mobilabonnement, kan kontakte deg per telefon. Dine opplysninger kan deles med én eller flere mobiloperatører vi samarbeider med.</p>
+      <!-- FIX #1: Updated consent checkbox -->
       <label class="consent">
         <input type="checkbox" id="f_consent" />
-        <span>Ja, jeg er over 18 år og ønsker å bli kontaktet per telefon av Meisel AS og Talkmore med tilbud på mobilabonnement.</span>
+        <span>Ja, jeg er over 18 år og ønsker å bli kontaktet per telefon av Meisel AS og utvalgte samarbeidspartnere med tilbud på mobilabonnement. Jeg godtar <a href="#" id="consentBvLink" style="color:var(--accent);text-decoration:underline;">brukervilkårene</a>.</span>
       </label>
       <div id="consentErr"></div>
+      <!-- FIX #3: Changed "Send søknad" to "Få tilbud" -->
       <button type="button" class="btn-accent" id="btnSend">
-        Send søknad
+        Få tilbud
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
       </button>
       <p style="font-size:0.72rem;color:rgba(255,255,255,0.4);margin-top:12px;text-align:center;">Mobilpris er en tjeneste levert av Meisel AS (org.nr. 931 260 413)</p>
@@ -544,8 +560,9 @@ footer {
   <!-- ====== THANK YOU (with bonus CTA) ====== -->
   <div class="ty" id="ty">
     <div class="emoji">🎉</div>
-    <h2>Takk for søknaden!</h2>
-    <p>Vi er allerede i gang med å jakte de beste mobilavtalene for deg.</p>
+    <!-- FIX #3: Changed "Takk for søknaden" -->
+    <h2>Takk! Vi har mottatt dine opplysninger.</h2>
+    <p>Vi er allerede i gang med å finne de beste mobilavtalene for deg.</p>
     <p>En av våre rådgivere vil ringe deg snart med et godt tilbud.</p>
     <hr class="ty-divider" />
     <p style="font-weight:600;color:#fff;">Vil du få et enda bedre og mer tilpasset tilbud?</p>
@@ -599,11 +616,12 @@ footer {
   <div class="two-col">
     <div class="text-col">
       <h2>Hvordan funker det?</h2>
-      <p>Mobilpris finner et godt tilbud på mobilabonnement for deg, kun gjennom en enkel søknad. Vi gjør det kompliserte enkelt, slik at du slipper å lete selv.</p>
+      <!-- FIX #2: Removed "søknad" reference -->
+      <p>Mobilpris finner et godt tilbud på mobilabonnement for deg, gjennom et enkelt skjema. Vi gjør det kompliserte enkelt, slik at du slipper å lete selv.</p>
       <ul class="checks">
         <li>
           <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="9 12 12 15 16 9"/></svg>
-          Kun en søknad
+          Kun ett enkelt skjema
         </li>
         <li>
           <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="9 12 12 15 16 9"/></svg>
@@ -625,7 +643,7 @@ footer {
 <!-- STEPS -->
 <section class="sec alt">
   <div class="inner">
-    <h2 class="sec-title">Mer data på 1-2-3</h2>
+    <h2 class="sec-title">Bedre tilbud på 1-2-3</h2>
     <div class="steps-grid">
       <div class="step-card">
         <div class="step-ico">
@@ -662,14 +680,16 @@ footer {
       <div class="c-card"><p>"Var litt tilfeldig at jeg sjekket tilbudet hos dere, men angrer ikke. Fornøyd med den nye datapakken!"</p><div class="c-author">Lisa Marie</div></div>
       <div class="c-card"><p>"Takk for hjelpen! Er fornøyd med datapakken nå 😊"</p><div class="c-author">Ahmad</div></div>
       <div class="c-card"><p>"Veldig enkelt og raskt. Fikk et godt tilbud samme dag jeg sendte inn skjemaet!"</p><div class="c-author">Marte K.</div></div>
-      <div class="c-card"><p>"Sparte over 200 kr i måneden på nytt abonnement. Anbefaler alle å sjekke dette!"</p><div class="c-author">Thomas B.</div></div>
+      <div class="c-card"><p>"Sparte penger på nytt abonnement. Anbefaler alle å sjekke dette!"</p><div class="c-author">Thomas B.</div></div>
       <div class="c-card"><p>"Syntes det var litt rart at det var gratis, men det var det faktisk. Superfornøyd!"</p><div class="c-author">Ingrid L.</div></div>
-      <div class="c-card"><p>"Tok bare noen minutter, og dagen etter hadde jeg tre tilbud å velge mellom."</p><div class="c-author">Jonas R.</div></div>
+      <div class="c-card"><p>"Tok bare noen minutter, og dagen etter hadde jeg tilbud å velge mellom."</p><div class="c-author">Jonas R.</div></div>
     </div>
     <div class="fade-l"></div>
     <div class="fade-r"></div>
   </div>
   <div class="c-dots" id="cDots"></div>
+  <!-- FIX #4: Testimonial disclaimer -->
+  <p class="testimonial-disclaimer">Navnene er anonymisert av hensyn til personvern. Erfaringene er individuelle og dine resultater kan variere.</p>
 </section>
 
 <!-- OM OSS -->
@@ -677,8 +697,9 @@ footer {
   <div class="two-col flip">
     <div class="text-col">
       <h2>Om oss</h2>
-      <p>Mobilpris er en sammenligningstjeneste som hjelper deg med å finne riktig mobilabonnement til riktig pris. Vi hjelper privatpersoner med å finne et abonnement som faktisk passer, både til ditt forbruk og til lommeboka.</p>
-      <p>Våre rådgivere har lang erfaring med å sammenligne pris, og vi vet at ingen mobilbrukere er helt like. Vårt mål er at du skal få en enklere mobilhverdag, til en hyggelig pris.</p>
+      <!-- FIX #2: Removed "sammenligningstjeneste" -->
+      <p>Mobilpris er en tjeneste som hjelper deg med å finne et mobilabonnement som passer dine behov og din lommebok. Vi hjelper privatpersoner med å finne et abonnement som faktisk passer, både til ditt forbruk og til lommeboka.</p>
+      <p>Våre rådgivere har lang erfaring innen mobil, og vi vet at ingen mobilbrukere er helt like. Vårt mål er at du skal få en enklere mobilhverdag, til en hyggelig pris.</p>
       <a href="#" class="btn-blue" onclick="document.querySelector('.hero').scrollIntoView({behavior:'smooth'});return false;">
         Få gratis tilbud
       </a>
@@ -705,9 +726,18 @@ footer {
       </div>
     </div>
     <div>
+      <div class="footer-nav-title">Juridisk</div>
+      <ul class="footer-nav">
+        <li><a id="pvLink">Personvernerklæring</a></li>
+        <li><a id="bvLink">Brukervilkår</a></li>
+        <li><a id="ckLink">Informasjonskapsler</a></li>
+      </ul>
+    </div>
+    <div>
       <div class="footer-nav-title">Navigasjon</div>
       <ul class="footer-nav">
-        <li><a href="#" id="pvLink">Personvern- og brukervilkår</a></li>
+        <li><a href="#" onclick="document.querySelector('.hero').scrollIntoView({behavior:'smooth'});return false;">Få tilbud</a></li>
+        <li><a href="#om-oss">Om oss</a></li>
       </ul>
     </div>
   </div>
@@ -716,111 +746,220 @@ footer {
   </div>
 </footer>
 
-<!-- PERSONVERN OVERLAY -->
+<!-- ================================================================ -->
+<!-- PERSONVERN / BRUKERVILKÅR / INFORMASJONSKAPSLER OVERLAY          -->
+<!-- ================================================================ -->
 <div class="pv-overlay" id="pvOverlay">
   <div class="pv-inner">
     <button class="pv-back" id="pvBack">
       <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
       Tilbake
     </button>
-    <h1>Personvernerklæring</h1>
-    <p style="color:#666;font-size:0.88rem;margin-bottom:32px;">Sist oppdatert: april 2026</p>
 
-    <div class="pv-section">
-      <h2>1. Behandlingsansvarlig</h2>
-      <p>Meisel AS er behandlingsansvarlig for personopplysningene som samles inn via mobilpris.no.</p>
-      <p><strong>Meisel AS</strong><br>
-      Org.nr.: 931 260 413<br>
-      Vestre Strandgate 29, 4611 Kristiansand S<br>
-      E-post: info@mobilpris.no</p>
-      <p>Mobilpris er et varenavn eid og drevet av Meisel AS.</p>
+    <!-- TABS -->
+    <div class="pv-tabs">
+      <button class="pv-tab active" data-tab="personvern">Personvern</button>
+      <button class="pv-tab" data-tab="brukervilkar">Brukervilkår</button>
+      <button class="pv-tab" data-tab="cookies">Informasjonskapsler</button>
     </div>
 
-    <div class="pv-section">
-      <h2>2. Hvilke opplysninger samler vi inn?</h2>
-      <p>Via skjemaet på mobilpris.no samler vi inn følgende personopplysninger:</p>
-      <ul>
-        <li>Fullt navn</li>
-        <li>E-postadresse</li>
-        <li>Telefonnummer</li>
-        <li>Fødselsdato</li>
-        <li>Informasjon om nåværende mobilabonnement og bruksmønster</li>
-        <li>Ønsket dekning/mobilnett (valgfritt)</li>
-        <li>Tidspunkt for innsending</li>
-      </ul>
+    <!-- ======================== TAB: PERSONVERN ======================== -->
+    <div class="pv-tab-content active" id="tab-personvern">
+      <h1>Personvernerklæring</h1>
+      <p style="color:#666;font-size:0.88rem;margin-bottom:32px;">Sist oppdatert: mai 2026</p>
+
+      <div class="pv-section">
+        <h2>1. Behandlingsansvarlig</h2>
+        <p>Meisel AS er behandlingsansvarlig for personopplysningene som samles inn via mobilpris.no.</p>
+        <p><strong>Meisel AS</strong><br>
+        Org.nr.: 931 260 413<br>
+        Vestre Strandgate 29, 4611 Kristiansand S<br>
+        E-post: info@mobilpris.no</p>
+        <p>Mobilpris er et varenavn eid og drevet av Meisel AS.</p>
+      </div>
+
+      <div class="pv-section">
+        <h2>2. Hvilke opplysninger samler vi inn?</h2>
+        <p>Via skjemaet på mobilpris.no samler vi inn følgende personopplysninger:</p>
+        <ul>
+          <li>Fullt navn</li>
+          <li>E-postadresse</li>
+          <li>Telefonnummer</li>
+          <li>Fødselsdato</li>
+          <li>Informasjon om nåværende mobilabonnement og bruksmønster</li>
+          <li>Ønsket dekning/mobilnett (valgfritt)</li>
+          <li>Tidspunkt for innsending</li>
+        </ul>
+      </div>
+
+      <div class="pv-section">
+        <h2>3. Formål og rettslig grunnlag</h2>
+        <p>Vi behandler personopplysningene dine for å kontakte deg med tilbud på mobilabonnement fra våre samarbeidspartnere innen mobilabonnement, herunder Talkmore og andre mobiloperatører vi samarbeider med.</p>
+        <p>Det rettslige grunnlaget for behandlingen er ditt samtykke, jf. personvernforordningen (GDPR) artikkel 6 nr. 1 bokstav a. Du kan når som helst trekke tilbake samtykket ditt (se punkt 7).</p>
+      </div>
+
+      <!-- FIX #1: Updated data sharing section -->
+      <div class="pv-section">
+        <h2>4. Hvem deler vi opplysningene med?</h2>
+        <p>Personopplysningene dine kan deles med følgende parter:</p>
+        <ul>
+          <li><strong>Mobiloperatører og samarbeidspartnere</strong> – Dine opplysninger kan deles med én eller flere mobiloperatører vi samarbeider med, slik at de kan kontakte deg med relevante tilbud på mobilabonnement. Per i dag inkluderer dette blant annet Talkmore AS, men kan også omfatte andre mobiloperatører i fremtiden.</li>
+          <li><strong>Airtable Inc.</strong> – brukes som databehandler for lagring av innsamlede opplysninger. Det er inngått databehandleravtale.</li>
+        </ul>
+        <p>Vi deler ikke opplysningene dine med aktører utenfor formålet om å gi deg tilbud på mobilabonnement.</p>
+      </div>
+
+      <div class="pv-section">
+        <h2>5. Lagringstid</h2>
+        <p>Vi lagrer personopplysningene dine i inntil 12 måneder etter innsamlingstidspunktet, eller til du trekker tilbake samtykket ditt – avhengig av hva som inntreffer først. Etter dette slettes opplysningene.</p>
+      </div>
+
+      <div class="pv-section">
+        <h2>6. Dine rettigheter</h2>
+        <p>I henhold til GDPR har du følgende rettigheter:</p>
+        <ul>
+          <li><strong>Innsyn:</strong> Du kan be om en kopi av personopplysningene vi har om deg.</li>
+          <li><strong>Retting:</strong> Du kan be om at uriktige opplysninger rettes.</li>
+          <li><strong>Sletting:</strong> Du kan be om at opplysningene dine slettes («retten til å bli glemt»).</li>
+          <li><strong>Dataportabilitet:</strong> Du kan be om å få utlevert opplysningene dine i et maskinlesbart format.</li>
+          <li><strong>Begrensning:</strong> Du kan be om at behandlingen av opplysningene dine begrenses.</li>
+          <li><strong>Innsigelse:</strong> Du kan protestere mot behandling basert på berettiget interesse.</li>
+        </ul>
+        <p>For å utøve dine rettigheter, kontakt oss på info@mobilpris.no.</p>
+      </div>
+
+      <div class="pv-section">
+        <h2>7. Trekke tilbake samtykke</h2>
+        <p>Du kan når som helst trekke tilbake samtykket ditt ved å sende en e-post til info@mobilpris.no. Tilbaketrekning av samtykket påvirker ikke lovligheten av behandling som fant sted før tilbaketrekningen.</p>
+      </div>
+
+      <div class="pv-section">
+        <h2>8. Klagerett</h2>
+        <p>Dersom du mener vi behandler personopplysningene dine i strid med personvernregelverket, har du rett til å klage til Datatilsynet:</p>
+        <p><strong>Datatilsynet</strong><br>
+        Postboks 458 Sentrum, 0105 Oslo<br>
+        E-post: postkasse@datatilsynet.no<br>
+        Nettside: datatilsynet.no</p>
+      </div>
+
+      <!-- FIX #8: Added §16 caller identification note -->
+      <div class="pv-section">
+        <h2>9. Telefonkontakt fra samarbeidspartnere</h2>
+        <p>Når du kontaktes per telefon av våre samarbeidspartnere, vil den som ringer alltid presentere seg og opplyse om at henvendelsen skjer i markedsføringshensikt, i henhold til markedsføringsloven § 16. Dersom henvendelsen skjer på vegne av en annen part, vil dette opplyses.</p>
+      </div>
+
+      <div class="pv-section">
+        <h2>10. Endringer i personvernerklæringen</h2>
+        <p>Dersom vi gjør vesentlige endringer i denne personvernerklæringen, vil vi informere deg via e-post eller ved tydelig varsling på nettsiden. Vi anbefaler at du jevnlig leser gjennom denne erklæringen.</p>
+      </div>
+
+      <div class="pv-section">
+        <h2>Kontakt oss</h2>
+        <p>Har du spørsmål om personvern eller dine rettigheter? Kontakt oss på:<br>
+        <strong>info@mobilpris.no</strong></p>
+      </div>
     </div>
 
-    <div class="pv-section">
-      <h2>3. Formål og rettslig grunnlag</h2>
-      <p>Vi behandler personopplysningene dine for å kontakte deg med tilbud på mobilabonnement fra Talkmore og/eller andre mobiloperatører vi samarbeider med.</p>
-      <p>Det rettslige grunnlaget for behandlingen er ditt samtykke, jf. personvernforordningen (GDPR) artikkel 6 nr. 1 bokstav a. Du kan når som helst trekke tilbake samtykket ditt (se punkt 7).</p>
+    <!-- ======================== TAB: BRUKERVILKÅR ======================== -->
+    <div class="pv-tab-content" id="tab-brukervilkar">
+      <h1>Brukervilkår</h1>
+      <p style="color:#666;font-size:0.88rem;margin-bottom:32px;">Sist oppdatert: mai 2026</p>
+
+      <div class="pv-section">
+        <h2>1. Om tjenesten</h2>
+        <p>Mobilpris er en digital tjeneste driftet av Meisel AS (org.nr. 931 260 413) på mobilpris.no. Tjenesten lar forbrukere etterspørre tilbud på mobilabonnement ved å fylle ut et skjema. Skjemaet genererer en forespørsel som videreformidles til relevante samarbeidspartnere innen mobilabonnement.</p>
+        <p>Ved å benytte tjenesten anses det som at du har godtatt disse brukervilkårene. Dersom du er uenig i vilkårene, kan du ikke benytte tjenesten.</p>
+      </div>
+
+      <div class="pv-section">
+        <h2>2. Formidling av forespørsler</h2>
+        <p>Etter at du har sendt inn skjemaet, vil Meisel AS og/eller våre samarbeidspartnere ta kontakt med deg per telefon med tilbud på mobilabonnement. Meisel AS formidler forespørsler videre til samarbeidspartnere og er ikke part i eventuelle avtaler som inngås mellom deg og en tredjepart som følge av kontakten.</p>
+      </div>
+
+      <div class="pv-section">
+        <h2>3. Krav til bruker</h2>
+        <p>Tjenesten krever at du er myndig (18 år eller eldre) og at den brukes til personlige, ikke-kommersielle formål. Du er selv ansvarlig for at opplysningene du oppgir er korrekte og i henhold til gjeldende lover og forskrifter.</p>
+      </div>
+
+      <div class="pv-section">
+        <h2>4. Immaterielle rettigheter</h2>
+        <p>Alle immaterielle rettigheter som omhandler Mobilpris, herunder innhold, teknologi, programvare, data og materiale, tilhører Meisel AS. Ingen andre har rett til å benytte disse uten skriftlig tillatelse.</p>
+      </div>
+
+      <div class="pv-section">
+        <h2>5. Personvern</h2>
+        <p>Meisel AS behandler personopplysninger i henhold til gjeldende personvernlovgivning og GDPR. For detaljer, se vår personvernerklæring.</p>
+      </div>
+
+      <div class="pv-section">
+        <h2>6. Ansvarsbegrensning</h2>
+        <p>Mobilpris er en formidlingstjeneste. Meisel AS er ikke part i avtaler mellom deg og mobiloperatører som kommer i kontakt med deg gjennom tjenesten, og kan ikke holdes ansvarlig for tap, skader eller kontraktsbrudd som kan oppstå i forbindelse med kjøp av tjenester fra tredjeparter.</p>
+        <p>Meisel AS garanterer ikke at tjenesten alltid er tilgjengelig, feilfri eller at den kan brukes til sitt formål til enhver tid. Bruk av tjenesten skjer på egen risiko.</p>
+      </div>
+
+      <div class="pv-section">
+        <h2>7. Drift og vedlikehold</h2>
+        <p>Meisel AS kan stenge tilgang til tjenesten ved vedlikehold og andre tekniske årsaker. Ved bruk som strider mot disse vilkårene kan tilgang nektes uten forvarsel.</p>
+      </div>
+
+      <div class="pv-section">
+        <h2>8. Endringer</h2>
+        <p>Meisel AS forbeholder seg retten til å endre disse brukervilkårene. Ved fortsatt bruk av tjenesten etter endring anses brukeren å ha godtatt de oppdaterte vilkårene.</p>
+      </div>
+
+      <div class="pv-section">
+        <h2>9. Lovvalg</h2>
+        <p>Brukervilkårene er underlagt norsk rett. Eventuelle tvister skal forsøkes løst gjennom forhandlinger. Dersom dette ikke fører frem, avgjøres tvisten av norske domstoler med Kristiansand tingrett som verneting.</p>
+      </div>
+
+      <div class="pv-section">
+        <h2>Kontakt oss</h2>
+        <p>Har du spørsmål om brukervilkårene? Kontakt oss på:<br>
+        <strong>info@mobilpris.no</strong></p>
+      </div>
     </div>
 
-    <div class="pv-section">
-      <h2>4. Hvem deler vi opplysningene med?</h2>
-      <p>Personopplysningene dine kan deles med følgende parter:</p>
-      <ul>
-        <li><strong>Talkmore AS</strong> – for oppfølging med tilbud på mobilabonnement</li>
-        <li><strong>Airtable Inc.</strong> – brukes som databehandler for lagring av innsamlede opplysninger. Det er inngått databehandleravtale.</li>
-      </ul>
-      <p>Vi selger ikke personopplysningene dine til tredjeparter.</p>
+    <!-- ======================== TAB: INFORMASJONSKAPSLER ======================== -->
+    <div class="pv-tab-content" id="tab-cookies">
+      <h1>Informasjonskapsler (cookies)</h1>
+      <p style="color:#666;font-size:0.88rem;margin-bottom:32px;">Sist oppdatert: mai 2026</p>
+
+      <div class="pv-section">
+        <h2>Hva er informasjonskapsler?</h2>
+        <p>Informasjonskapsler (cookies) er små tekstfiler som lagres på din enhet når du besøker nettsider. Disse filene gjør det mulig for nettsiden å huske dine handlinger og preferanser over tid, slik at du slipper å oppgi visse opplysninger eller innstillinger på nytt ved hvert besøk.</p>
+      </div>
+
+      <div class="pv-section">
+        <h2>Typer informasjonskapsler vi bruker</h2>
+        <p><strong>Nødvendige informasjonskapsler:</strong> Disse er essensielle for at nettstedet skal fungere korrekt, for eksempel å huske ditt samtykkevalg. Disse krever ikke samtykke.</p>
+        <p><strong>Markedsføringskapsler:</strong> Vi bruker Meta (Facebook) Pixel for å måle effektiviteten av vår markedsføring. Denne informasjonskapselen aktiveres kun dersom du samtykker ved å klikke «Godta» i samtykkebanneret. Dersom du klikker «Avslå», vil ingen markedsføringskapsler lastes inn.</p>
+      </div>
+
+      <div class="pv-section">
+        <h2>Tredjepartsinformasjonskapsler</h2>
+        <p>Dersom du samtykker til markedsføringskapsler, vil Meta (Facebook) kunne sette informasjonskapsler via Meta Pixel. Meta behandler data i henhold til sin egen personvernerklæring. Vi deler aldri personidentifiserbare opplysninger med tredjeparter uten ditt samtykke.</p>
+      </div>
+
+      <div class="pv-section">
+        <h2>Administrering av informasjonskapsler</h2>
+        <p>Du kan når som helst endre ditt samtykke ved å slette nettsidedata i nettleseren din og besøke mobilpris.no på nytt – da vil samtykkebanneret vises igjen. De fleste nettlesere lar deg også kontrollere informasjonskapsler gjennom innstillingene.</p>
+        <p>Vær oppmerksom på at dersom du begrenser bruken av informasjonskapsler, kan dette påvirke funksjonaliteten på nettsiden.</p>
+      </div>
+
+      <div class="pv-section">
+        <h2>Kontakt oss</h2>
+        <p>Har du spørsmål om vår bruk av informasjonskapsler? Kontakt oss på:<br>
+        <strong>info@mobilpris.no</strong></p>
+      </div>
     </div>
 
-    <div class="pv-section">
-      <h2>5. Lagringstid</h2>
-      <p>Vi lagrer personopplysningene dine i inntil 12 måneder etter innsamlingstidspunktet, eller til du trekker tilbake samtykket ditt – avhengig av hva som inntreffer først. Etter dette slettes opplysningene.</p>
-    </div>
-
-    <div class="pv-section">
-      <h2>6. Dine rettigheter</h2>
-      <p>I henhold til GDPR har du følgende rettigheter:</p>
-      <ul>
-        <li><strong>Innsyn:</strong> Du kan be om en kopi av personopplysningene vi har om deg.</li>
-        <li><strong>Retting:</strong> Du kan be om at uriktige opplysninger rettes.</li>
-        <li><strong>Sletting:</strong> Du kan be om at opplysningene dine slettes («retten til å bli glemt»).</li>
-        <li><strong>Dataportabilitet:</strong> Du kan be om å få utlevert opplysningene dine i et maskinlesbart format.</li>
-        <li><strong>Begrensning:</strong> Du kan be om at behandlingen av opplysningene dine begrenses.</li>
-        <li><strong>Innsigelse:</strong> Du kan protestere mot behandling basert på berettiget interesse.</li>
-      </ul>
-      <p>For å utøve dine rettigheter, kontakt oss på info@mobilpris.no.</p>
-    </div>
-
-    <div class="pv-section">
-      <h2>7. Trekke tilbake samtykke</h2>
-      <p>Du kan når som helst trekke tilbake samtykket ditt ved å sende en e-post til info@mobilpris.no. Tilbaketrekning av samtykket påvirker ikke lovligheten av behandling som fant sted før tilbaketrekningen.</p>
-    </div>
-
-    <div class="pv-section">
-      <h2>8. Klagerett</h2>
-      <p>Dersom du mener vi behandler personopplysningene dine i strid med personvernregelverket, har du rett til å klage til Datatilsynet:</p>
-      <p><strong>Datatilsynet</strong><br>
-      Postboks 458 Sentrum, 0105 Oslo<br>
-      E-post: postkasse@datatilsynet.no<br>
-      Nettside: datatilsynet.no</p>
-    </div>
-
-    <div class="pv-section">
-      <h2>9. Informasjonskapsler (cookies)</h2>
-      <p>Mobilpris.no bruker kun funksjonelle informasjonskapsler som er nødvendige for at nettsiden skal fungere. Vi bruker ikke analyse- eller markedsføringscookies uten ditt samtykke. Du vil bli spurt om samtykke ved ditt første besøk.</p>
-    </div>
-
-    <div class="pv-section">
-      <h2>10. Endringer i personvernerklæringen</h2>
-      <p>Dersom vi gjør vesentlige endringer i denne personvernerklæringen, vil vi informere deg via e-post eller ved tydelig varsling på nettsiden. Vi anbefaler at du jevnlig leser gjennom denne erklæringen.</p>
-    </div>
-
-    <div class="pv-section">
-      <h2>Kontakt oss</h2>
-      <p>Har du spørsmål om personvern eller dine rettigheter? Kontakt oss på:<br>
-      <strong>info@mobilpris.no</strong></p>
-    </div>
   </div>
 </div>
 
 <!-- COOKIE BANNER -->
 <div id="cookieBanner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:1000;background:#0d2d4a;border-top:2px solid rgba(143,227,255,0.2);padding:18px 32px;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;">
   <p style="color:rgba(255,255,255,0.8);font-size:0.85rem;margin:0;max-width:680px;line-height:1.5;">
-    Vi bruker kun nødvendige informasjonskapsler for at nettsiden skal fungere. Les mer i vår <a href="#" id="cookiePvLink" style="color:#8fe3ff;text-decoration:underline;">personvernerklæring</a>.
+    Vi bruker nødvendige informasjonskapsler for at nettsiden skal fungere, og markedsføringskapsler (Meta Pixel) kun med ditt samtykke. Les mer i vår <a href="#" id="cookiePvLink" style="color:#8fe3ff;text-decoration:underline;">personvernerklæring</a>.
   </p>
   <div style="display:flex;gap:10px;flex-shrink:0;">
     <button id="cookieDeny" style="background:transparent;border:1.5px solid rgba(255,255,255,0.3);color:rgba(255,255,255,0.7);border-radius:999px;padding:8px 20px;font-family:inherit;font-size:0.85rem;cursor:pointer;">Avslå</button>
@@ -836,8 +975,32 @@ footer {
   // CONFIG
   // ============================================================
   var TOTAL_STEPS = 5;
-  var AIRTABLE_URL = 'https://api.airtable.com/v0/appFDZvEK2WMBtjoi/tblk6zq7y5eKGHVPE';
-  var AIRTABLE_KEY = 'patAnKybAUJQKKjwR.bce20bd902debaf53035257c7e4609d1cab7ca05fc0910542c769dd165fae55a';
+  var API_ENDPOINT = '/api/submit';
+
+  // ============================================================
+  // FIX #5: META PIXEL — consent-gated loading
+  // ============================================================
+  var pixelLoaded = false;
+
+  function initMetaPixel() {
+    if (pixelLoaded) return;
+    pixelLoaded = true;
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '942017291993096');
+    fbq('track', 'PageView');
+  }
+
+  // Auto-load pixel if user previously consented
+  if (localStorage.getItem('cookieChoice') === 'accepted') {
+    initMetaPixel();
+  }
 
   // ============================================================
   // STATE
@@ -939,7 +1102,6 @@ footer {
     var monthEl = $('f_bmonth');
     var yearEl = $('f_byear');
 
-    // Days 1-31
     for (var d = 1; d <= 31; d++) {
       var opt = document.createElement('option');
       opt.value = d;
@@ -947,7 +1109,6 @@ footer {
       dayEl.appendChild(opt);
     }
 
-    // Months
     var months = ['Januar','Februar','Mars','April','Mai','Juni','Juli','August','September','Oktober','November','Desember'];
     for (var m = 0; m < months.length; m++) {
       var opt = document.createElement('option');
@@ -956,7 +1117,6 @@ footer {
       monthEl.appendChild(opt);
     }
 
-    // Years (current year down to 1920)
     var thisYear = new Date().getFullYear();
     for (var y = thisYear; y >= 1920; y--) {
       var opt = document.createElement('option');
@@ -986,7 +1146,6 @@ footer {
   // ============================================================
   document.addEventListener('DOMContentLoaded', function () {
 
-    // Populate date dropdowns
     populateDateDropdowns();
 
     // ---- Step 2: Validate birth date, check age ----
@@ -1000,7 +1159,6 @@ footer {
         dateErr.textContent = '';
         dateErr.style.cssText = '';
 
-        // Clear select errors
         ['f_bday','f_bmonth','f_byear'].forEach(function(id) {
           $(id).classList.remove('err');
         });
@@ -1026,7 +1184,6 @@ footer {
           return;
         }
 
-        // Store formatted date
         var dayStr = day < 10 ? '0' + day : '' + day;
         var monthStr = month < 10 ? '0' + month : '' + month;
         answers.birthdate = dayStr + '.' + monthStr + '.' + year;
@@ -1070,14 +1227,12 @@ footer {
 
         answers[key] = val;
 
-        // Visual selection
         var optsParent = this.closest('.opts');
         if (optsParent) {
           optsParent.querySelectorAll('.opt').forEach(function (o) { o.classList.remove('sel'); });
         }
         this.classList.add('sel');
 
-        // Advance to next step
         if (next) {
           var nextNum = parseInt(next, 10);
           if (!isNaN(nextNum)) {
@@ -1169,24 +1324,21 @@ footer {
           }
         };
 
-        fetch(AIRTABLE_URL, {
+        fetch(API_ENDPOINT, {
           method: 'POST',
           headers: {
-            'Authorization': 'Bearer ' + AIRTABLE_KEY,
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify(data)
+          body: JSON.stringify({ fields: data.fields })
         }).then(function (res) {
           return res.json();
         }).then(function (json) {
           if (json && json.id) recordId = json.id;
-          // Fire Meta Pixel Lead event on successful submission
           if (typeof fbq === 'function') {
             fbq('track', 'Lead');
           }
           showThanks();
         }).catch(function () {
-          // Fire Lead event even if Airtable fails — user completed the form
           if (typeof fbq === 'function') {
             fbq('track', 'Lead');
           }
@@ -1226,17 +1378,12 @@ footer {
           }
         };
 
-        // If we have the record ID, update the existing row; otherwise create new
-        var url = recordId ? AIRTABLE_URL + '/' + recordId : AIRTABLE_URL;
-        var method = recordId ? 'PATCH' : 'POST';
-
-        fetch(url, {
-          method: method,
+        fetch(API_ENDPOINT, {
+          method: 'POST',
           headers: {
-            'Authorization': 'Bearer ' + AIRTABLE_KEY,
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify(data)
+          body: JSON.stringify({ recordId: recordId, fields: { 'Ønsket dekning': bonusAnswer } })
         }).then(function () {
           showFinalThanks();
         }).catch(function () {
@@ -1246,54 +1393,93 @@ footer {
     }
 
     // ============================================================
-    // PERSONVERN OVERLAY
+    // OVERLAY SYSTEM (Personvern / Brukervilkår / Cookies)
     // ============================================================
     var pvOverlay = $('pvOverlay');
-    var pvLink = $('pvLink');
-    var pvBack = $('pvBack');
-    var cookiePvLink = $('cookiePvLink');
 
-    function openPV(e) {
+    function openOverlay(tabName, e) {
       if (e) e.preventDefault();
       pvOverlay.style.display = 'block';
+      // Activate the right tab
+      document.querySelectorAll('.pv-tab').forEach(function(t) {
+        t.classList.toggle('active', t.dataset.tab === tabName);
+      });
+      document.querySelectorAll('.pv-tab-content').forEach(function(c) {
+        c.classList.toggle('active', c.id === 'tab-' + tabName);
+      });
       window.scrollTo(0, 0);
-      history.pushState(null, '', '#personvern');
+      history.pushState(null, '', '#' + tabName);
     }
-    function closePV() {
+
+    function closeOverlay() {
       pvOverlay.style.display = 'none';
       history.pushState(null, '', window.location.pathname);
     }
-    if (pvLink) pvLink.addEventListener('click', openPV);
-    if (pvBack) pvBack.addEventListener('click', closePV);
-    if (cookiePvLink) cookiePvLink.addEventListener('click', openPV);
 
-    if (window.location.hash === '#personvern') {
-      pvOverlay.style.display = 'block';
-      window.scrollTo(0, 0);
+    // Tab switching inside overlay
+    document.querySelectorAll('.pv-tab').forEach(function(tab) {
+      tab.addEventListener('click', function() {
+        var target = this.dataset.tab;
+        document.querySelectorAll('.pv-tab').forEach(function(t) {
+          t.classList.toggle('active', t.dataset.tab === target);
+        });
+        document.querySelectorAll('.pv-tab-content').forEach(function(c) {
+          c.classList.toggle('active', c.id === 'tab-' + target);
+        });
+        history.replaceState(null, '', '#' + target);
+      });
+    });
+
+    // Footer links
+    var pvLink = $('pvLink');
+    var bvLink = $('bvLink');
+    var ckLink = $('ckLink');
+    var pvBack = $('pvBack');
+    var cookiePvLink = $('cookiePvLink');
+    var consentBvLink = $('consentBvLink');
+
+    if (pvLink) pvLink.addEventListener('click', function(e) { openOverlay('personvern', e); });
+    if (bvLink) bvLink.addEventListener('click', function(e) { openOverlay('brukervilkar', e); });
+    if (ckLink) ckLink.addEventListener('click', function(e) { openOverlay('cookies', e); });
+    if (pvBack) pvBack.addEventListener('click', closeOverlay);
+    if (cookiePvLink) cookiePvLink.addEventListener('click', function(e) { openOverlay('personvern', e); });
+    if (consentBvLink) consentBvLink.addEventListener('click', function(e) { e.stopPropagation(); openOverlay('brukervilkar', e); });
+
+    // Handle direct URL hash access
+    var hashMap = { '#personvern': 'personvern', '#brukervilkar': 'brukervilkar', '#cookies': 'cookies' };
+    if (hashMap[window.location.hash]) {
+      openOverlay(hashMap[window.location.hash]);
     }
 
     window.addEventListener('popstate', function () {
-      if (window.location.hash !== '#personvern') {
+      if (!hashMap[window.location.hash]) {
         pvOverlay.style.display = 'none';
       }
     });
 
     // ============================================================
-    // COOKIE BANNER
+    // FIX #5: COOKIE BANNER — proper consent-gated tracking
     // ============================================================
     var cookieBanner = $('cookieBanner');
     var cookieAccept = $('cookieAccept');
     var cookieDeny = $('cookieDeny');
+
+    // Show banner only if no choice has been made
     if (cookieBanner && !localStorage.getItem('cookieChoice')) {
       cookieBanner.style.display = 'flex';
     }
+
     if (cookieAccept) cookieAccept.addEventListener('click', function () {
       localStorage.setItem('cookieChoice', 'accepted');
       cookieBanner.style.display = 'none';
+      // NOW load the Meta Pixel
+      initMetaPixel();
     });
+
     if (cookieDeny) cookieDeny.addEventListener('click', function () {
       localStorage.setItem('cookieChoice', 'denied');
       cookieBanner.style.display = 'none';
+      // Do NOT load Meta Pixel
     });
 
     // ============================================================
@@ -1365,13 +1551,13 @@ footer {
     // ============================================================
     // NAV HIDE ON SCROLL
     // ============================================================
-    var nav = $('nav');
+    var navEl = $('nav');
     var lastY = 0;
     window.addEventListener('scroll', function () {
       var y = window.scrollY;
-      if (nav) {
-        if (y > lastY && y > 80) nav.classList.add('hide');
-        else nav.classList.remove('hide');
+      if (navEl) {
+        if (y > lastY && y > 80) navEl.classList.add('hide');
+        else navEl.classList.remove('hide');
       }
       lastY = y;
     });
